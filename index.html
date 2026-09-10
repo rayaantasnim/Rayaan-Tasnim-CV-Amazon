@@ -1,408 +1,1803 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rayaan Tasnim - Personal Profile & CV</title>
-    <!-- Bootstrap 5.3.8 CSS CDN -->
-    <link href="https://jsdelivr.net" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://jsdelivr.net" integrity="sha384-C6Rzs3gTPviFEbahvSR71maXyRIHLb91yGl5O9I5ILy+dN9+nJOZ" crossorigin="anonymous"></script>
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rayaan Tasnim - SDE III Profile & CV</title>
+    <meta name="description" content="Interactive, modern CV and profile of Rayaan Tasnim, Senior Software Development Engineer (SDE III) at Amazon, featuring interactive 3D awards showcase and experience timeline." />
+    <meta property="og:title" content="Rayaan Tasnim - SDE III Profile & CV" />
+    <meta property="og:description" content="Interactive, modern CV and profile of Rayaan Tasnim, Senior Software Development Engineer (SDE III) at Amazon, featuring interactive 3D awards showcase and experience timeline." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- External Custom CSS -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="bg-light py-5">
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 
-    <div class="container bg-white p-5 shadow-sm rounded">
-        <!-- HEADER SECTION -->
-        <header class="text-center mb-5 border-bottom pb-4">
-            <h1 class="display-4 fw-bold text-dark text-uppercase">Rayaan Tasnim</h1>
-            <p class="lead text-secondary fw-semibold">Senior Software Development Engineer (SDE III)<br>
-                Global Engineering & Cloud Architecture
-                <br> Amazon.com, Inc.</p>
+    <!-- Tailwind CSS CDN for high-fidelity utility styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            },
+            colors: {
+              brand: {
+                50: '#f0f7ff',
+                100: '#e0effe',
+                200: '#bae0fd',
+                500: '#0284c7',
+                600: '#0369a1',
+                700: '#075985',
+                900: '#0c4a6e',
+              },
+              amazon: {
+                orange: '#ff9900',
+                blue: '#146eb4',
+                dark: '#232f3e',
+              }
+            },
+            animation: {
+              'float-slow': 'float 6s ease-in-out infinite',
+              'pulse-subtle': 'pulseSubtle 3s ease-in-out infinite',
+              'balloon-sway': 'balloonSway 4s ease-in-out infinite alternate',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              pulseSubtle: {
+                '0%, 100%': { opacity: 1, transform: 'scale(1)' },
+                '50%': { opacity: 0.85, transform: 'scale(1.02)' },
+              },
+              balloonSway: {
+                '0%': { transform: 'translateY(0) rotate(-3deg)' },
+                '100%': { transform: 'translateY(-14px) rotate(3deg)' },
+              }
+            }
+          }
+        }
+      };
+    </script>
 
-            <div class="d-flex flex-wrap justify-content-center gap-3 text-muted mt-3">
-                <span>📍 <strong>Current:</strong> Block I, Basundhara Residential Zone, Dhaka </span>
-                <span>📍 <strong>Permanent:</strong> Kheruyazani, Dapunia, Mymensingh, Bangladesh</span>
+    <style>
+      /* Ensure paragraph justify alignment as strictly requested */
+      p {
+        text-align: justify;
+        text-justify: inter-word;
+      }
+      .carrer-summery {
+        text-align: justify;
+        text-justify: inter-word;
+      }
+
+      /* 3D Parallax and perspective layers */
+      .perspective-container {
+        perspective: 1400px;
+        perspective-origin: center center;
+      }
+      .card-3d-wrapper {
+        transform-style: preserve-3d;
+        transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s ease;
+      }
+
+      /* Confetti canvas overlay */
+      #confetti-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #94a3b8;
+        border-radius: 9999px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #64748b;
+      }
+
+      /* Modal animation */
+      .modal-backdrop {
+        backdrop-filter: blur(8px);
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-sky-500 selection:text-white min-h-screen flex flex-col relative overflow-x-hidden">
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- FLOATING CELEBRATION BALLOONS (Active during Promotion Celebrations) -->
+    <div id="balloon-cluster" class="fixed inset-0 pointer-events-none z-50 overflow-hidden hidden">
+      <div class="absolute -bottom-24 left-8 animate-balloon-sway transition-all duration-1000" style="animation-delay: 0s;">
+        <span class="text-7xl filter drop-shadow-lg">🎈</span>
+      </div>
+      <div class="absolute -bottom-28 left-24 animate-balloon-sway transition-all duration-1000" style="animation-delay: 1.2s;">
+        <span class="text-6xl filter drop-shadow-lg">🎉</span>
+      </div>
+      <div class="absolute -bottom-20 right-12 animate-balloon-sway transition-all duration-1000" style="animation-delay: 0.6s;">
+        <span class="text-8xl filter drop-shadow-lg">🎈</span>
+      </div>
+      <div class="absolute -bottom-32 right-32 animate-balloon-sway transition-all duration-1000" style="animation-delay: 1.8s;">
+        <span class="text-7xl filter drop-shadow-lg">🎊</span>
+      </div>
+      <div class="absolute -bottom-24 left-1/2 -translate-x-1/2 animate-balloon-sway transition-all duration-1000" style="animation-delay: 0.9s;">
+        <span class="text-8xl filter drop-shadow-lg">🎈</span>
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION FOR CELEBRATIONS & ACTIONS -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900/95 text-white px-5 py-3.5 rounded-xl shadow-2xl border border-sky-500/30 flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+      <span id="toast-icon" class="text-2xl">🎺</span>
+      <div>
+        <h4 id="toast-title" class="text-sm font-bold text-sky-300">Grand Promotion Fanfare!</h4>
+        <p id="toast-desc" class="text-xs text-slate-300">Level 6 celebration flute & confetti triggered!</p>
+      </div>
+    </div>
+
+    <!-- TOP NAVIGATION & STATUS BAR WITH RESPONSIVE SCREEN-WIDTH ADJUSTABLE TOGGLER -->
+    <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-sm shrink-0">
+            RT
+          </div>
+          <div>
+            <span class="font-bold text-slate-900 tracking-tight text-base sm:text-lg block leading-tight">Rayaan Tasnim</span>
+            <span class="text-xs font-medium text-slate-500 flex items-center gap-1.5">
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              SDE III • Amazon.com, Inc.
+            </span>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Links (Responsive: visible on wide screens) -->
+        <div class="hidden xl:flex items-center gap-1.5 lg:gap-2">
+          <a href="#summary-section" class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition-colors">
+            🌟 Summary
+          </a>
+          <a href="#experience-section" class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition-colors">
+            💼 Experience
+          </a>
+          <a href="#projects-section" class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition-colors">
+            ⚙️ Projects
+          </a>
+          <a href="#awards-section" class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200/60 transition-colors">
+            🏆 Honors
+          </a>
+          <a href="#skills-section" class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition-colors">
+            💻 Skills
+          </a>
+          <a href="#education-section" class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition-colors">
+            🎓 Education
+          </a>
+          <a href="#personal-section" class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition-colors">
+            🏠 Profile
+          </a>
+          <a href="#references-section" class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition-colors">
+            👥 References
+          </a>
+          <button onclick="window.print()" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-900 text-white hover:bg-slate-800 shadow-sm transition-all active:scale-95 ml-2" title="Print or Save PDF">
+            🖨️ Print
+          </button>
+        </div>
+
+        <!-- Medium & Compact Screens: Quick Badges + Screen-Width Adjustable Toggler -->
+        <div class="flex xl:hidden items-center gap-2 sm:gap-3">
+          <a href="#awards-section" class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200/60 transition-colors">
+            🏆 <span class="hidden sm:inline">Honors</span>
+          </a>
+          <button onclick="window.print()" class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-slate-900 text-white hover:bg-slate-800 shadow-sm transition-all active:scale-95" title="Print CV">
+            🖨️ <span class="hidden sm:inline">Print</span>
+          </button>
+          <!-- RESPONSIVE TOGGLER ICON (Adjustable with screen-width) -->
+          <button id="nav-toggler-btn" onclick="toggleMobileNav()" aria-label="Toggle Navigation Menu" aria-expanded="false" class="p-2 rounded-xl text-slate-700 hover:text-sky-600 hover:bg-slate-100 border border-slate-200 active:scale-95 transition-all flex items-center justify-center cursor-pointer shadow-2xs">
+            <svg id="toggler-icon-hamburger" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg id="toggler-icon-close" class="w-6 h-6 hidden text-red-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- RESPONSIVE MOBILE NAVIGATION DRAWER (Expands smoothly on toggle) -->
+      <div id="mobile-nav-drawer" class="xl:hidden hidden border-t border-slate-200 bg-white/98 backdrop-blur-xl shadow-xl transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <a href="#summary-section" onclick="closeMobileNav()" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-100 text-slate-700 hover:text-sky-600 transition-colors text-xs font-semibold">
+            <span>🌟</span> Career Summary
+          </a>
+          <a href="#experience-section" onclick="closeMobileNav()" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-100 text-slate-700 hover:text-sky-600 transition-colors text-xs font-semibold">
+            <span>💼</span> Work Experience
+          </a>
+          <a href="#projects-section" onclick="closeMobileNav()" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-100 text-slate-700 hover:text-sky-600 transition-colors text-xs font-semibold">
+            <span>⚙️</span> Key Projects
+          </a>
+          <a href="#awards-section" onclick="closeMobileNav()" class="flex items-center gap-2 p-2.5 rounded-xl bg-amber-50/70 border border-amber-200/60 hover:bg-amber-100 text-amber-900 transition-colors text-xs font-bold">
+            <span>🏆</span> 3D Honors Carousel
+          </a>
+          <a href="#skills-section" onclick="closeMobileNav()" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-100 text-slate-700 hover:text-sky-600 transition-colors text-xs font-semibold">
+            <span>💻</span> Skills & Tests
+          </a>
+          <a href="#education-section" onclick="closeMobileNav()" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-100 text-slate-700 hover:text-sky-600 transition-colors text-xs font-semibold">
+            <span>🎓</span> Education
+          </a>
+          <a href="#personal-section" onclick="closeMobileNav()" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-100 text-slate-700 hover:text-sky-600 transition-colors text-xs font-semibold">
+            <span>🏠</span> Personal & Family
+          </a>
+          <a href="#references-section" onclick="closeMobileNav()" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-100 text-slate-700 hover:text-sky-600 transition-colors text-xs font-semibold">
+            <span>👥</span> References
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN WRAPPER -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12 sm:space-y-16">
+
+      <!-- ========================================== -->
+      <!-- HEADER HERO SECTION -->
+      <!-- ========================================== -->
+      <header class="relative overflow-hidden bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-10 lg:p-12">
+        <!-- Background Hero Visual from Cloud Storage -->
+        <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=80" alt="Cloud Infrastructure Network" class="w-full h-full object-cover" referrerpolicy="no-referrer" loading="lazy" />
+        </div>
+
+        <div class="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-8 lg:gap-12">
+          <!-- Profile Avatar with Cloud Architecture Glow -->
+          <div class="relative shrink-0 group">
+            <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-2xl overflow-hidden border-4 border-white shadow-xl ring-2 ring-slate-200/60 bg-slate-100">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Rayaan Tasnim Senior Software Engineer" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" referrerpolicy="no-referrer" />
             </div>
-            <div class="d-flex flex-wrap justify-content-center gap-3 text-muted mt-2">
-                <span>📞 <strong>Phone:</strong> +880 1712 345678, +1 (555) 014-9281</span>
-                <span>✉️ <strong>Email:</strong> rayaantasnim@gmail.com</span>
+            <div class="absolute -bottom-2 -right-2 bg-emerald-600 text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-md border-2 border-white flex items-center gap-1">
+              <span>⚡</span> SDE III
             </div>
-        </header>
+          </div>
 
-        <!-- Start of Content Layout -->
-        <div class="row">
-            <!-- LEFT COLUMN: PERSONAL, SPIRITUAL, SKILLS & HOBBIES -->
-            <div class="col-lg-4 border-end">
+          <!-- Header Core Details -->
+          <div class="text-center md:text-left flex-grow space-y-4">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-semibold mb-2 border border-sky-100">
+                🌐 Global Engineering & Cloud Architecture
+              </div>
+              <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight uppercase">
+                Rayaan Tasnim
+              </h1>
+              <p class="text-lg sm:text-xl text-slate-600 font-semibold mt-1 leading-snug">
+                Senior Software Development Engineer (SDE III)<br>
+                Global Engineering & Cloud Architecture<br>
+                <span class="text-sky-600 font-bold">Amazon.com, Inc.</span>
+              </p>
+            </div>
+
+            <!-- Locations (Exact Original Text with Enhanced Icons) -->
+            <div class="flex flex-wrap justify-center md:justify-start gap-3 sm:gap-4 text-xs sm:text-sm text-slate-600 pt-2 border-t border-slate-100">
+              <span class="inline-flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200/70">
+                📍 <strong>Current:</strong> Block I, Basundhara Residential Zone, Dhaka
+              </span>
+              <span class="inline-flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200/70">
+                📍 <strong>Permanent:</strong> Kheruyazani, Dapunia, Mymensingh, Bangladesh
+              </span>
+            </div>
+
+            <!-- Contacts (Exact Original Text with Direct Links) -->
+            <div class="flex flex-wrap justify-center md:justify-start gap-3 sm:gap-4 text-xs sm:text-sm text-slate-600">
+              <a href="tel:+8801712345678" class="inline-flex items-center gap-1.5 bg-slate-50 hover:bg-sky-50 hover:text-sky-700 px-3 py-1.5 rounded-lg border border-slate-200/70 transition-colors">
+                📞 <strong>Phone:</strong> +880 1712 345678, +1 (555) 014-9281
+              </a>
+              <a href="mailto:rayaantasnim@gmail.com" class="inline-flex items-center gap-1.5 bg-slate-50 hover:bg-sky-50 hover:text-sky-700 px-3 py-1.5 rounded-lg border border-slate-200/70 transition-colors">
+                ✉️ <strong>Email:</strong> rayaantasnim@gmail.com
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ============================================================== -->
+      <!-- PART 1: PROFESSIONAL CAREER, WORK EXPERIENCE & PROJECTS        -->
+      <!-- ============================================================== -->
+      <div class="space-y-12 sm:space-y-16">
+        
+        <!-- CAREER SUMMARY -->
+          <section id="summary-section" class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-xs relative overflow-hidden">
+            <!-- Background Accent Image -->
+            <div class="h-32 -mx-6 -mt-6 sm:-mx-8 sm:-mt-8 mb-6 overflow-hidden relative">
+              <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80" alt="Algorithmic Engineering Screen" class="w-full h-full object-cover" referrerpolicy="no-referrer" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-transparent"></div>
+              <div class="absolute bottom-3 left-6 sm:left-8 flex items-center gap-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-sky-800 bg-sky-50 px-3 py-1 rounded-md border border-sky-200">
+                  🚀 Executive Profile
+                </span>
+                <span class="text-xs font-medium text-slate-500 bg-white/90 px-2.5 py-1 rounded-md border border-slate-200">
+                  8+ Years Amazon Corporate Trajectory
+                </span>
+              </div>
+            </div>
+
+            <h3 class="text-2xl font-bold text-sky-600 border-b border-slate-100 pb-3 flex items-center gap-2">
+              <span>🌟</span> Career Summary
+            </h3>
+            
+            <p class="text-slate-700 leading-relaxed text-base sm:text-lg carrer-summery mt-4">
+              Highly accomplished Computer Scientist and Senior Software Development Engineer (SDE III) with 8 years of elite, large-scale software engineering experience, including a rapid corporate trajectory within Amazon.com, Inc. Proven expert in micro-frontend architectures, high-throughput cloud environments, and client-side optimization frameworks serving millions of global users. A world-class algorithmic strategist and former ICPC World Champion who leverages elite computational efficiency to build robust, scalable, and highly performant web applications via international remote collaboration.
+            </p>
+
+            <!-- Quick Metrics High-Contrast Badges -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-slate-100">
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 text-center">
+                <div class="text-xl sm:text-2xl font-black text-sky-600">8+</div>
+                <div class="text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Years Experience</div>
+              </div>
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 text-center">
+                <div class="text-xl sm:text-2xl font-black text-amber-600">L6</div>
+                <div class="text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Senior SDE III</div>
+              </div>
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 text-center">
+                <div class="text-xl sm:text-2xl font-black text-emerald-600">10M+</div>
+                <div class="text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Concurrent Users</div>
+              </div>
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 text-center">
+                <div class="text-xl sm:text-2xl font-black text-indigo-600">4105</div>
+                <div class="text-[11px] font-semibold text-slate-600 uppercase tracking-wider">CodeForces Peak</div>
+              </div>
+            </div>
+          </section>
+
+          
+
+        <!-- WORK EXPERIENCE WITH CELEBRATION FANFARE, CONFETTI, FLUTE & BALLOONS -->
+          <section id="experience-section" class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-xs relative overflow-hidden">
+            <!-- Header with Celebration Trigger Banner -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+              <div>
+                <h3 class="text-2xl font-bold text-sky-600 flex items-center gap-2">
+                  <span>💼</span> Work Experience
+                </h3>
+                <p class="text-xs text-slate-500 mt-1">Chronological engineering trajectory at Amazon.com, Inc. with interactive promotions.</p>
+              </div>
+
+              <!-- Grand Celebration Trigger Button -->
+              <button onclick="triggerPromotionCelebration('All Promotions Celebration', 'Experience all Amazon promotions with royal flute arpeggio & confetti burst!')" class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition-all transform hover:scale-105 active:scale-95 shrink-0 cursor-pointer">
+                <span>🎺</span>
+                <span>Grand Promotion Celebration! 🎊</span>
+              </button>
+            </div>
+
+            <!-- Experience Banner Image -->
+            <div class="mt-4 mb-6 rounded-xl overflow-hidden border border-slate-200/80 h-36 relative">
+              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Amazon Global Engineering Squad" class="w-full h-full object-cover" referrerpolicy="no-referrer" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/40 to-transparent flex items-center p-6">
+                <div class="text-white space-y-1">
+                  <div class="text-xs font-semibold uppercase tracking-widest text-amber-400">Amazon.com, Inc. • Global Engineering</div>
+                  <div class="text-lg sm:text-xl font-bold">8 Years of Engineering Excellence & Promotions</div>
+                  <div class="text-xs text-slate-200">From SDE I (Level 4) to Senior SDE III (Level 6)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CHRONOLOGICAL TIMELINE -->
+            <div class="relative pl-6 sm:pl-8 space-y-8 before:content-[''] before:absolute before:left-2.5 sm:before:left-3 before:top-3 before:bottom-3 before:w-0.5 before:bg-gradient-to-b before:from-sky-500 before:via-indigo-500 before:to-slate-300">
+              
+              <!-- SDE III (Level 6) -->
+              <div class="relative group">
+                <!-- Timeline Dot Indicator -->
+                <div class="absolute -left-[27px] sm:-left-[31px] top-1.5 w-6 h-6 rounded-full bg-sky-500 border-4 border-white shadow-md flex items-center justify-center text-[10px] text-white font-bold group-hover:scale-125 transition-transform">
+                  ★
+                </div>
+
+                <div class="bg-slate-50/80 hover:bg-sky-50/40 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-sky-300 transition-all duration-300 shadow-2xs">
+                  <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                    <div>
+                      <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-amber-100 text-amber-800 text-xs font-bold mb-1 border border-amber-200">
+                        ⭐ Promotion: Level 6 Senior Staff
+                      </div>
+                      <h5 class="text-lg sm:text-xl font-bold text-slate-900 mb-0">
+                        Senior Software Development Engineer (SDE III) — Level 6
+                      </h5>
+                      <p class="text-slate-600 text-sm mb-1 mt-0.5 font-medium">
+                        Amazon.com, Inc. (Remote — Bangladesh) <br>
+                        <strong class="text-sky-700">2023 – Present</strong>
+                      </p>
+                    </div>
+
+                    <!-- Individual Role Celebration Button -->
+                    <button onclick="triggerPromotionCelebration('Level 6 Promotion Fanfare!', 'Celebrated SDE III promotion with flute solo & confetti shower!')" class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white shadow-xs transition-transform active:scale-95 shrink-0 self-start cursor-pointer">
+                      <span>🎉</span> Celebrate L6! 🎺
+                    </button>
+                  </div>
+
+                  <!-- Tech Stacks Icons & Badges -->
+                  <div class="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-slate-200/60">
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">⚛️ Next.js</span>
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">☁️ AWS CloudFront</span>
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">⚡ AWS Lambda</span>
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">🗄️ DynamoDB</span>
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">🔷 TypeScript</span>
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">🧩 Micro-Frontends</span>
+                  </div>
+
+                  <!-- Exact Original Bullet Points -->
+                  <ul class="text-slate-700 space-y-2 mt-4 text-xs sm:text-sm pl-4 list-disc">
+                    <li>Architected and deployed a highly scalable micro-frontend framework utilizing Next.js and AWS CloudFront, optimizing performance for 10M+ concurrent global users.</li>
+                    <li>Engineered core state-management architectures, driving a 35% reduction in First Contentful Paint (FCP) across major enterprise modules.</li>
+                    <li>Led a distributed squad of 8+ international engineers, establishing modern code-quality guidelines and automated linting configurations that minimized bugs by 22%.</li>
+                    <li>Spearheaded the integration of localized cloud services, managing seamless API migrations and low-latency client-server synchronization layers with AWS Lambda and DynamoDB.</li>
+                  </ul>
+
+                  <!-- Expandable Summary Panel -->
+                  <details class="mt-4 group/details">
+                    <summary class="text-xs font-bold text-sky-600 cursor-pointer hover:text-sky-700 flex items-center gap-1 select-none">
+                      <span class="group-open/details:rotate-90 transition-transform">▶</span> Expand Technical Overview & Impact
+                    </summary>
+                    <div class="mt-3 p-3.5 bg-white rounded-xl border border-sky-100 text-xs text-slate-600 leading-relaxed space-y-2">
+                      <p><strong>Architecture Deep-Dive:</strong> Engineered isolated sub-domain micro-frontends with edge-based route dispatching, allowing decoupled continuous deployments without breaking inter-team dependencies.</p>
+                      <p><strong>Latency & Telemetry:</strong> Integrated real-user telemetry (RUM) tracking Core Web Vitals across multi-region edge caches, resulting in world-class 99.9th percentile responsiveness.</p>
+                    </div>
+                  </details>
+                </div>
+              </div>
+
+              <!-- SDE II (Level 5) -->
+              <div class="relative group">
+                <!-- Timeline Dot Indicator -->
+                <div class="absolute -left-[27px] sm:-left-[31px] top-1.5 w-6 h-6 rounded-full bg-indigo-500 border-4 border-white shadow-md flex items-center justify-center text-[10px] text-white font-bold group-hover:scale-125 transition-transform">
+                  ●
+                </div>
+
+                <div class="bg-slate-50/80 hover:bg-indigo-50/40 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-indigo-300 transition-all duration-300 shadow-2xs">
+                  <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                    <div>
+                      <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-indigo-100 text-indigo-800 text-xs font-bold mb-1 border border-indigo-200">
+                        ⭐ Promotion: Level 5 Mid-Career
+                      </div>
+                      <h5 class="text-lg sm:text-xl font-bold text-slate-900 mb-0">
+                        Software Development Engineer II (SDE II) — Level 5
+                      </h5>
+                      <p class="text-slate-600 text-sm mb-1 mt-0.5 font-medium">
+                        Amazon.com, Inc. (Remote — Bangladesh) <br>
+                        <strong class="text-indigo-700">2020 – 2023</strong>
+                      </p>
+                    </div>
+
+                    <!-- Individual Role Celebration Button -->
+                    <button onclick="triggerPromotionCelebration('Level 5 Promotion Fanfare!', 'Celebrated SDE II promotion with flute melody & confetti fireworks!')" class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs transition-transform active:scale-95 shrink-0 self-start cursor-pointer">
+                      <span>🎉</span> Celebrate L5! 🎺
+                    </button>
+                  </div>
+
+                  <!-- Tech Stacks Icons & Badges -->
+                  <div class="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-slate-200/60">
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">⚛️ React.js</span>
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">🔷 TypeScript</span>
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">🔄 GitHub Actions CI/CD</span>
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">♿ WCAG Compliance</span>
+                  </div>
+
+                  <!-- Exact Original Bullet Points -->
+                  <ul class="text-slate-700 space-y-2 mt-4 text-xs sm:text-sm pl-4 list-disc">
+                    <li>Owned end-to-end component feature deployment for high-traffic web interfaces, refactoring legacy codebases into modular React/TypeScript design systems.</li>
+                    <li>Collaborated closely with cross-functional UX/UI design teams to enforce strict WCAG accessibility compliance standards, broadening usability metrics by 14%.</li>
+                    <li>Spearheaded continuous integration and deployment (CI/CD) optimizations using GitHub Actions, cutting build pipeline deployment times down by 18 minutes.</li>
+                  </ul>
+
+                  <!-- Expandable Summary Panel -->
+                  <details class="mt-4 group/details">
+                    <summary class="text-xs font-bold text-indigo-600 cursor-pointer hover:text-indigo-700 flex items-center gap-1 select-none">
+                      <span class="group-open/details:rotate-90 transition-transform">▶</span> Expand Build & CI/CD Innovations
+                    </summary>
+                    <div class="mt-3 p-3.5 bg-white rounded-xl border border-indigo-100 text-xs text-slate-600 leading-relaxed space-y-2">
+                      <p><strong>Build Acceleration:</strong> Implemented Docker layer caching, parallelized Jest testing matrices, and tree-shaking rules that saved thousands of cumulative developer build hours annually.</p>
+                    </div>
+                  </details>
+                </div>
+              </div>
+
+              <!-- SDE I (Level 4) -->
+              <div class="relative group">
+                <!-- Timeline Dot Indicator -->
+                <div class="absolute -left-[27px] sm:-left-[31px] top-1.5 w-6 h-6 rounded-full bg-slate-400 border-4 border-white shadow-md flex items-center justify-center text-[10px] text-white font-bold group-hover:scale-125 transition-transform">
+                  ●
+                </div>
+
+                <div class="bg-slate-50/80 hover:bg-slate-100/60 p-5 sm:p-6 rounded-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300 shadow-2xs">
+                  <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                    <div>
+                      <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-200 text-slate-800 text-xs font-bold mb-1">
+                        🚀 Induction: Level 4 Software Engineer
+                      </div>
+                      <h5 class="text-lg sm:text-xl font-bold text-slate-900 mb-0">
+                        Software Development Engineer I (SDE I) — Level 4
+                      </h5>
+                      <p class="text-slate-600 text-sm mb-1 mt-0.5 font-medium">
+                        Amazon.com, Inc. (Remote — Bangladesh) <br>
+                        <strong class="text-slate-700">2018 – 2020</strong>
+                      </p>
+                    </div>
+
+                    <!-- Individual Role Celebration Button -->
+                    <button onclick="triggerPromotionCelebration('Level 4 Induction Salute!', 'Celebrated career launch at Amazon with flute arpeggio & confetti burst!')" class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-800 text-white shadow-xs transition-transform active:scale-95 shrink-0 self-start cursor-pointer">
+                      <span>🎉</span> Celebrate L4! 🎺
+                    </button>
+                  </div>
+
+                  <!-- Tech Stacks Icons & Badges -->
+                  <div class="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-slate-200/60">
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">📐 Algorithmic Efficiency</span>
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">🧪 UI Testing & Jest</span>
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white px-2 py-0.5 rounded-md border border-slate-200 text-slate-700">🐧 Linux/Unix Environments</span>
+                  </div>
+
+                  <!-- Exact Original Bullet Points -->
+                  <ul class="text-slate-700 space-y-2 mt-4 text-xs sm:text-sm pl-4 list-disc">
+                    <li>Developed core software code, refactored internal algorithms, and built out robust technical baselines under senior engineering supervision.</li>
+                    <li>Collaborated tightly with testing squads to deploy mission-critical, low-latency UI features safely into high-traffic corporate production pipelines.</li>
+                  </ul>
+
+                  <!-- Expandable Summary Panel -->
+                  <details class="mt-4 group/details">
+                    <summary class="text-xs font-bold text-slate-600 cursor-pointer hover:text-slate-700 flex items-center gap-1 select-none">
+                      <span class="group-open/details:rotate-90 transition-transform">▶</span> Expand Early Milestones
+                    </summary>
+                    <div class="mt-3 p-3.5 bg-white rounded-xl border border-slate-200 text-xs text-slate-600 leading-relaxed space-y-2">
+                      <p><strong>Foundation:</strong> Honed Amazon Leadership Principles, mastered high-concurrency event loops, and delivered rock-solid zero-defect release cycles.</p>
+                    </div>
+                  </details>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          
+
+        <!-- KEY PROJECTS -->
+          <section id="projects-section" class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-xs relative overflow-hidden">
+            <!-- Cloud Image for Systems Visualization -->
+            <div class="h-28 -mx-6 -mt-6 sm:-mx-8 sm:-mt-8 mb-6 overflow-hidden relative">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="High throughput cloud architecture" class="w-full h-full object-cover" referrerpolicy="no-referrer" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
+              <span class="absolute bottom-3 left-6 sm:left-8 text-xs font-bold uppercase tracking-wider text-sky-800 bg-sky-50 px-2.5 py-1 rounded-md border border-sky-200">
+                🌐 Core Innovations
+              </span>
+            </div>
+
+            <h3 class="text-2xl font-bold text-sky-600 border-b border-slate-100 pb-3 flex items-center gap-2">
+              <span>🛠️</span> Key Projects
+            </h3>
+
+            <ul class="text-slate-700 space-y-4 mt-6 text-sm sm:text-base divide-y divide-slate-100">
+              <li class="pt-3 first:pt-0">
+                <div class="flex items-center gap-2 font-bold text-slate-900 text-base sm:text-lg">
+                  <span class="text-sky-600">⚡</span>
+                  <strong>Global Micro-Frontend Architecture:</strong>
+                </div>
+                <p class="text-slate-600 mt-1 pl-6">
+                  Scalable orchestration frameworks for localized, low-latency web interfaces serving millions of concurrent global users.
+                </p>
+                <div class="flex flex-wrap gap-1.5 mt-2 pl-6">
+                  <span class="text-[11px] bg-slate-100 text-slate-700 font-mono px-2 py-0.5 rounded">Multi-Region Edge</span>
+                  <span class="text-[11px] bg-slate-100 text-slate-700 font-mono px-2 py-0.5 rounded">Sub-100ms Hydration</span>
+                  <span class="text-[11px] bg-slate-100 text-slate-700 font-mono px-2 py-0.5 rounded">Resilient Fallbacks</span>
+                </div>
+              </li>
+
+              <li class="pt-4">
+                <div class="flex items-center gap-2 font-bold text-slate-900 text-base sm:text-lg">
+                  <span class="text-indigo-600">⚙️</span>
+                  <strong>Next-Gen Web Automation Engines:</strong>
+                </div>
+                <p class="text-slate-600 mt-1 pl-6">
+                  Distributed client-side algorithms and automated state-management systems designed to optimize core e-commerce performance indicators.
+                </p>
+                <div class="flex flex-wrap gap-1.5 mt-2 pl-6">
+                  <span class="text-[11px] bg-slate-100 text-slate-700 font-mono px-2 py-0.5 rounded">State Machine V8</span>
+                  <span class="text-[11px] bg-slate-100 text-slate-700 font-mono px-2 py-0.5 rounded">Event Sourcing</span>
+                  <span class="text-[11px] bg-slate-100 text-slate-700 font-mono px-2 py-0.5 rounded">WebAssembly Core</span>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          
+
+      </div>
+
+    </main>
+
+    <!-- ========================================================== -->
+    <!-- SPECIAL HONORS & AWARDS PINNED 3D CAROUSEL SECTION          -->
+    <!-- FULL-SCREEN AWARDS LIST CATCHING DISPLAY (NO PICTURES)     -->
+    <!-- ========================================================== -->
+    <section id="awards-section" class="relative w-full min-h-[750vh] sm:min-h-[900vh] bg-slate-950 text-white my-8">
+      
+      <!-- STICKY FULLSCREEN VIEWPORT (Locks in place while scrolling through height) -->
+      <div id="awards-sticky-viewport" class="sticky top-0 h-screen w-full flex flex-col justify-between overflow-hidden px-4 sm:px-6 lg:px-8 py-3 sm:py-4 select-none">
+        
+        <!-- Subtle Ambient Background Glows that adapt to card theme -->
+        <div id="ambient-glow" class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-sky-500/15 rounded-full blur-3xl pointer-events-none transition-all duration-700"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px] opacity-25 pointer-events-none"></div>
+
+        <!-- TOP BAR OF THE AWARDS EXPERIENCE -->
+        <div class="relative z-10 max-w-6xl w-full mx-auto flex items-center justify-between gap-3 pt-1">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-lg sm:text-xl shrink-0">
+              🏆
+            </div>
+            <div>
+              <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 text-[11px] sm:text-xs font-bold border border-amber-500/30">
+                Honors & Achievements • Interactive 3D Parallax Showcase
+              </div>
+              <h2 class="text-lg sm:text-2xl font-black tracking-tight text-white leading-tight">
+                Competitive Programming Hall of Fame
+              </h2>
+            </div>
+          </div>
+
+          <!-- Controls & Indicator -->
+          <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+            <span class="text-xs font-mono text-slate-300 bg-slate-800/90 px-3 py-1.5 rounded-xl border border-slate-700 shadow-inner">
+              <span id="card-counter-current" class="text-amber-400 font-bold text-sm">1</span> <span class="text-slate-500">/</span> <span id="card-counter-total" class="font-bold">13</span>
+            </span>
+            <button onclick="prevAwardCard()" class="p-2 sm:p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 active:bg-slate-600 text-white border border-slate-700 active:scale-95 transition-all cursor-pointer shadow-sm" title="Previous Award (← or Scroll Up)">
+              ◀
+            </button>
+            <button onclick="nextAwardCard()" class="p-2 sm:p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 active:bg-slate-600 text-white border border-slate-700 active:scale-95 transition-all cursor-pointer shadow-sm" title="Next Award (→ or Scroll Down)">
+              ▶
+            </button>
+          </div>
+        </div>
+
+        <!-- CENTER STAGE: 3D PARALLAX CHANGEABLE ROTATING CARD CONTAINER WITH AMPLE HEIGHT & FULL WIDTH -->
+        <div class="relative z-10 max-w-6xl w-full mx-auto flex-grow flex items-center justify-center py-2 sm:py-3 perspective-container">
+          
+          <!-- The Upgraded Dynamic 3D Card: Full Screen Awards Matrix (Zero Picture) -->
+          <div id="award-3d-card" class="card-3d-wrapper w-full max-w-6xl bg-slate-900/95 rounded-3xl border border-slate-700/80 p-5 sm:p-7 lg:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden transition-all duration-500 flex flex-col justify-between h-[82vh] sm:h-[84vh] max-h-[800px]">
+            
+            <!-- Card Header: Badges, Title, Subtitle, and Stat Chips -->
+            <div class="border-b border-slate-800/90 pb-4 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span id="card-category-badge" class="text-[11px] sm:text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full bg-emerald-500 text-white shadow-md">
+                    National High School
+                  </span>
+                  <span id="card-rank-badge" class="text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full bg-slate-950/90 text-amber-300 border border-amber-500/40 shadow-sm">
+                    Triple Champion Record
+                  </span>
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/85 text-[11px] font-semibold text-slate-200 border border-slate-700/60">
+                    <span>🏅</span> Verified Hall of Fame
+                  </span>
+                </div>
                 
-                <!-- PERSONAL & FAMILY PROFILE -->
-                <section class="mb-4">
-                    <h3 class="text-primary border-bottom pb-2">Personal & Family</h3>
-                    <ul class="list-unstyled lh-lg">
-                        <li><strong>Age:</strong> 30</li>
-                        <li><strong>Religion:</strong> Islam</li><br>
-                        
-                        <!-- Spouse Details -->
-                        <li class="mt-2"><strong>Spouse:</strong> Syeda Areeba Fatima
-                            <br><small class="text-muted">Bachelor of Medicine, Bachelor of Surgery (Dhaka Medical College)</small>
-                            <br><small class="text-muted">Fellow of the College of Physicians and Surgeons (Medicine)</small>
-                            <br><small class="text-muted">Resident Medical Officer</small>
-                            <br><small class="text-muted">Savar Upazila Health Complex</small>
-                            <br><small class="text-muted">Ministry of Health and Family Welfare</small>
-                        </li><br>
-                        
-                        <!-- Child Details -->
-                        <li class="mt-2"><strong>Daughter:</strong> <br>
-                            Arowa Tasnim Afifa <br>
-                            Age: 5</li><br>
+                <div class="flex items-center gap-2">
+                  <span id="card-tenure-tag" class="text-xs font-mono font-bold text-amber-400 bg-slate-950/80 px-3 py-1 rounded-lg border border-slate-700/60">
+                    2008 – 2012
+                  </span>
+                  <button onclick="openCurrentCardModal()" class="py-1.5 px-3.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-md transition-all active:scale-95 cursor-pointer">
+                    🔍 <span>View Certificate</span>
+                  </button>
+                </div>
+              </div>
 
-                        <li class="mt-2"><strong>Son:</strong> <br>Arshad Tasnim Afif <br>Age: 2</li><br><br>
-                        
-<!-- Father Details -->
-<li class="mt-2"><strong>👨 Father:</strong> Md. Jobayer Hasan Shiplu
-    <br><small class="text-muted">Current: Managing Director (MD), Denimach (Armana Group)</small>
-    <br><small class="text-muted">Former Roles:</small>
-    <br><small class="text-muted">CEO, AWPL, ABA Group</small>
-    <br><small class="text-muted">DGM, Square Denim Ltd.</small>
-    <br><small class="text-muted">Education: Graduate of BUTEX</small>
-    <br><small class="text-muted">Email: jobayerhasanshiplu@gmail.com</small>
-    <br><small class="text-muted">Phone: 01734200012</small>
-</li><br><br>
+              <!-- Title & Subtitle + Stats -->
+              <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-1">
+                <div>
+                  <h3 id="card-title" class="text-xl sm:text-2xl lg:text-3xl font-black text-emerald-400 tracking-tight leading-snug">
+                    National High School Programming Contest (NHSPC)
+                  </h3>
+                  <p id="card-subtitle" class="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal mt-0.5">
+                    National premier computational championship for high-school algorithmists in Bangladesh.
+                  </p>
+                </div>
 
-<!-- Mother Details -->
-<li class="mt-2"><strong>👩 Mother:</strong> Dr. Shahnaz Sultana
-    <br><small class="text-muted">Current: Director, Jamalpur Medical College & Hospital</small>
-    <br><small class="text-muted">Former Roles:</small>
-    <br><small class="text-muted">UH&FPO, Dhanbari Health Complex</small>
-    <br><small class="text-muted">Medical Officer, Netrokona</small>
-    <br><small class="text-muted">Education: MBBS, Major Ziaur Rahman Medical College, Bogura</small>
-    <br><small class="text-muted">Email: shahanajsultana2123@outlook.com</small>
-    <br><small class="text-muted">Phone: 01919421292</small>
-</li><br><br>
-                        
-                        <!-- Sister Details -->
-                        <li class="mt-2"><strong>Sister:</strong> Dr. Rifah Tasnia
-                            <br><small class="text-muted">Medical Officer, Chattogram (BCS Health Cadre)</small>
-                            <br><small class="text-muted">MBBS (Bachelor of Medicine, Bachelor of Surgery), Dhaka Medical College (DMC)</small>
-                            <br><small class="text-muted">HSC: Muminunnesa Govt. Women's College</small>
-                            <br><small class="text-muted">SSC: Shaheed Smrity Higher Secondary School</small>
-                        </li>
-                    </ul>
-                </section><br><br>
+                <!-- Quick Contest Statistics Chips -->
+                <div class="flex items-center gap-2 text-center shrink-0">
+                  <div class="bg-slate-800/80 rounded-xl px-3 py-1.5 border border-slate-700/60 min-w-[70px]">
+                    <div class="text-[10px] uppercase font-bold text-slate-400">Accolades</div>
+                    <div id="stat-total-awards" class="text-sm sm:text-base font-black text-amber-400">5</div>
+                  </div>
+                  <div class="bg-slate-800/80 rounded-xl px-3 py-1.5 border border-slate-700/60 min-w-[70px]">
+                    <div class="text-[10px] uppercase font-bold text-slate-400">First Year</div>
+                    <div id="stat-first-year" class="text-sm sm:text-base font-black text-sky-400">2008</div>
+                  </div>
+                  <div class="bg-slate-800/80 rounded-xl px-3 py-1.5 border border-slate-700/60 min-w-[80px]">
+                    <div class="text-[10px] uppercase font-bold text-slate-400">Top Result</div>
+                    <div id="stat-best-result" class="text-sm sm:text-base font-black text-emerald-400">Champion</div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                <!-- SPIRITUAL ACHIEVEMENTS -->
-                <section class="mb-4">
-                    <h3 class="text-primary border-bottom pb-2">Spiritual</h3>
-                    <ul class="list-unstyled lh-lg">
-                        <li>⭐ Full Qur-an Hafiz</li>
-                        <li>🕋 Performed Hajj (2016)</li>
-                    </ul>
-                </section>
+            <!-- AWARDS LIST CATCHING FULL SCREEN -->
+            <div class="flex-grow flex flex-col my-3 overflow-hidden">
+              <div class="flex items-center justify-between text-xs font-bold uppercase tracking-widest text-slate-400 mb-2.5">
+                <span class="flex items-center gap-2 text-amber-300">
+                  <span class="text-base">🎖️</span> Verified Honors, Medals & National Ranking Records:
+                </span>
+                <span class="text-[11px] text-slate-400 normal-case font-medium">
+                  Card <span id="card-sub-counter">1</span> of 13 • Scroll inside if list exceeds view
+                </span>
+              </div>
 
-<!-- TECHNICAL & PERSONAL SKILLS -->
-<section class="mb-4">
-  <h3 class="text-primary border-bottom pb-2">Skills</h3>
-  <ul class="list-unstyled lh-lg text-muted">
-    <li><strong>Languages:</strong> JavaScript (ES6+), TypeScript, C++, Python, HTML5, CSS3, SQL, HTML, CSS</li>
-    <li><strong>Frameworks & Libraries:</strong> React.js, Next.js, Vue.js, Node.js, WebAssembly, Redux Toolkit, Tailwind CSS</li>
-    <li><strong>Cloud & Infrastructure:</strong> AWS (EC2, S3, CloudFront, Lambda, DynamoDB), Docker, Kubernetes, CI/CD (GitHub Actions)</li>
-    <li><strong>Testing & Tooling:</strong> Jest, Cypress, Webpack, Vite, Git, Postman, Linux/Unix Environments</li>
-    <li><strong>Expertise:</strong> Algorithmic Optimization, Micro-Frontend Architecture, Low-Latency System Design, Mathematics, Information Technology, Automation Algorithms</li>
-    <li><strong>English Proficiency:</strong> IELTS Band Score 8.5</li>
-    <li><strong>Critical Thinking Skills:</strong> SAT Score: 1490 out of 1600</li>
-    <li><strong>Martial Arts:</strong> Karate Black Belt</li>
-  </ul>
-</section>
+              <!-- The Full-Screen Awards Matrix List -->
+              <div id="card-records-container" class="flex-grow overflow-y-auto pr-2 select-text" style="scrollbar-width: thin;">
+                <ul id="card-records-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-3.5">
+                  <!-- Dynamically populated via JS without picture, taking full screen width -->
+                </ul>
+              </div>
+            </div>
 
-                <!-- HOBBIES -->
-                <section class="mb-4">
-                    <h3 class="text-primary border-bottom pb-2">Hobbies</h3>
-                    <ul class="list-unstyled lh-lg">
-                        <li><strong>Chess:</strong> Strategy & patience</li>
-                        <li><strong>Programming:</strong> Creative problem solving</li>
-                        <li><strong>Karate:</strong> Discipline & focus</li>
-                    </ul>
-                </section>
-            </div> <!-- End of Left Column -->
+            <!-- Bottom Navigation Bar & Guide -->
+            <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+              <span class="flex items-center gap-1.5 text-slate-400">
+                <span class="text-amber-400">💡</span> 
+                <span class="hidden sm:inline">Scroll page to transform between contests • Full-screen award records verified</span>
+                <span class="sm:hidden">Scroll or swipe to rotate</span>
+              </span>
+              <div class="flex items-center gap-2">
+                <button onclick="prevAwardCard()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700/80 transition-colors cursor-pointer">
+                  ◀ Prev
+                </button>
+                <button onclick="nextAwardCard()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700/80 transition-colors cursor-pointer">
+                  Next ▶
+                </button>
+              </div>
+            </div>
 
-            <!-- RIGHT COLUMN: EXPERIENCE, EDUCATION, AWARDS & REFERENCES -->
-            <div class="col-lg-8 ps-lg-4">
+          </div>
 
-                <!-- CAREER SUMMARY -->
-                <section class="mb-4">
-                    <h3 class="text-primary border-bottom pb-2">Career Summary</h3>
-                    <p class="text-muted lh-base carrer-summery">
-                        Highly accomplished Computer Scientist and Senior Software Development Engineer (SDE III) with 8 years of elite, large-scale software engineering experience, including a rapid corporate trajectory within Amazon.com, Inc. Proven expert in micro-frontend architectures, high-throughput cloud environments, and client-side optimization frameworks serving millions of global users. A world-class algorithmic strategist and former ICPC World Champion who leverages elite computational efficiency to build robust, scalable, and highly performant web applications via international remote collaboration.
-                    </p>
-                </section>
-                
-                <!-- WORK EXPERIENCE -->
-<section class="mb-4">
-    <h3 class="text-primary border-bottom pb-2">Work Experience</h3>
-    
-    <!-- SDE III -->
-    <div class="mb-3">
-        <h5 class="fw-bold mb-0">Senior Software Development Engineer (SDE III) — Level 6</h5>
-        <p class="text-muted mb-1">Amazon.com, Inc. (Remote — Bangladesh) <br>
-         <strong>2023 – Present</strong></p>
-        <ul class="text-muted ps-3">
-            <li>Architected and deployed a highly scalable micro-frontend framework utilizing Next.js and AWS CloudFront, optimizing performance for 10M+ concurrent global users.</li>
-            <li>Engineered core state-management architectures, driving a 35% reduction in First Contentful Paint (FCP) across major enterprise modules.</li>
-            <li>Led a distributed squad of 8+ international engineers, establishing modern code-quality guidelines and automated linting configurations that minimized bugs by 22%.</li>
-            <li>Spearheaded the integration of localized cloud services, managing seamless API migrations and low-latency client-server synchronization layers with AWS Lambda and DynamoDB.</li>
-        </ul>
-    </div>
+        </div>
 
-    <!-- SDE II -->
-    <div class="mb-3">
-        <h5 class="fw-bold mb-0">Software Development Engineer II (SDE II) — Level 5</h5>
-        <p class="text-muted mb-1">Amazon.com, Inc. (Remote — Bangladesh) <br>
-         <strong>2020 – 2023</strong></p>
-        <ul class="text-muted ps-3">
-            <li>Owned end-to-end component feature deployment for high-traffic web interfaces, refactoring legacy codebases into modular React/TypeScript design systems.</li>
-            <li>Collaborated closely with cross-functional UX/UI design teams to enforce strict WCAG accessibility compliance standards, broadening usability metrics by 14%.</li>
-            <li>Spearheaded continuous integration and deployment (CI/CD) optimizations using GitHub Actions, cutting build pipeline deployment times down by 18 minutes.</li>
-        </ul>
-    </div>
+        <!-- BOTTOM CONTROLS & MINI THUMBNAIL TRACKER -->
+        <div class="relative z-10 max-w-6xl w-full mx-auto space-y-2 pb-1">
+          <!-- Scroll Progress Bar -->
+          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+            <div id="awards-scroll-progress" class="bg-gradient-to-r from-amber-400 via-sky-400 to-emerald-400 h-full w-1/13 transition-all duration-300"></div>
+          </div>
 
-    <!-- SDE I -->
-    <div class="mb-3">
-        <h5 class="fw-bold mb-0">Software Development Engineer I (SDE I) — Level 4</h5>
-        <p class="text-muted mb-1">Amazon.com, Inc. (Remote — Bangladesh) <br>
-         <strong>2018 – 2020</strong></p>
-        <ul class="text-muted ps-3">
-            <li>Developed core software code, refactored internal algorithms, and built out robust technical baselines under senior engineering supervision.</li>
-            <li>Collaborated tightly with testing squads to deploy mission-critical, low-latency UI features safely into high-traffic corporate production pipelines.</li>
-        </ul>
-    </div>
-</section>
+          <!-- Quick Selector Pills (1 to 13) -->
+          <div id="card-nav-pills" class="flex items-center justify-center gap-1.5 sm:gap-2 overflow-x-auto py-1 scrollbar-none">
+            <!-- Populated via JS -->
+          </div>
+        </div>
 
-                <!-- KEY PROJECTS -->
-<section class="mb-4">
-    <h3 class="text-primary border-bottom pb-2">Key Projects</h3>
-    <ul class="text-muted ps-3">
-        <li class="mb-2"><strong>Global Micro-Frontend Architecture:</strong><br> Scalable orchestration frameworks for localized, low-latency web interfaces serving millions of concurrent global users.</li>
-        <li><strong>Next-Gen Web Automation Engines:</strong><br> Distributed client-side algorithms and automated state-management systems designed to optimize core e-commerce performance indicators.</li>
-    </ul>
-</section>
+      </div>
+    </section>
 
-                <!-- EDUCATION -->
-                <section class="mb-4">
-                    <h3 class="text-primary border-bottom pb-2">Education</h3>
-                    <div class="mb-3">
-                        <h5 class="fw-bold mb-0">Doctor of Philosophy (Ph.D.) in Computer Science</h5>
-                        <p class="text-muted">Stanford University, California, USA <br> 
-                        <strong>2024</strong> </p>
+    <!-- ============================================================== -->
+    <!-- PART 2: SKILLS, ACADEMIC PEDIGREE, PERSONAL & REFERENCES       -->
+    <!-- ============================================================== -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12 sm:space-y-16">
+      
+      <div class="space-y-12 sm:space-y-16">
+
+          <!-- TECHNICAL & PERSONAL SKILLS & PROFICIENCY -->
+          <section id="skills-section" class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-xs relative overflow-hidden">
+            <!-- Cloud Image for Modern Code Terminal -->
+            <div class="h-28 -mx-6 -mt-6 sm:-mx-8 sm:-mt-8 mb-6 overflow-hidden relative">
+              <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80" alt="Code and Matrix terminal" class="w-full h-full object-cover" referrerpolicy="no-referrer" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
+              <span class="absolute bottom-3 left-6 sm:left-8 text-xs font-bold uppercase tracking-wider text-slate-800 bg-white/95 px-3 py-1 rounded-md backdrop-blur-xs border border-slate-200/80 shadow-2xs">
+                ⚡ Tech Stack & Certifications
+              </span>
+            </div>
+
+            <h3 class="text-2xl font-bold text-sky-600 border-b border-slate-100 pb-3 flex items-center gap-2">
+              <span>💻</span> Technical Skills & Certifications
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/70 space-y-1">
+                <strong class="text-slate-900 block text-sm font-bold flex items-center gap-1.5">
+                  <span class="text-sky-600">⌨️</span> Languages:
+                </strong>
+                <p class="text-slate-700 text-xs sm:text-sm leading-relaxed">
+                  JavaScript (ES6+), TypeScript, C++, Python, HTML5, CSS3, SQL, HTML, CSS
+                </p>
+              </div>
+
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/70 space-y-1">
+                <strong class="text-slate-900 block text-sm font-bold flex items-center gap-1.5">
+                  <span class="text-indigo-600">⚛️</span> Frameworks & Libraries:
+                </strong>
+                <p class="text-slate-700 text-xs sm:text-sm leading-relaxed">
+                  React.js, Next.js, Vue.js, Node.js, WebAssembly, Redux Toolkit, Tailwind CSS
+                </p>
+              </div>
+
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/70 space-y-1">
+                <strong class="text-slate-900 block text-sm font-bold flex items-center gap-1.5">
+                  <span class="text-amber-600">☁️</span> Cloud & Infrastructure:
+                </strong>
+                <p class="text-slate-700 text-xs sm:text-sm leading-relaxed">
+                  AWS (EC2, S3, CloudFront, Lambda, DynamoDB), Docker, Kubernetes, CI/CD (GitHub Actions)
+                </p>
+              </div>
+
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/70 space-y-1">
+                <strong class="text-slate-900 block text-sm font-bold flex items-center gap-1.5">
+                  <span class="text-emerald-600">🧪</span> Testing & Tooling:
+                </strong>
+                <p class="text-slate-700 text-xs sm:text-sm leading-relaxed">
+                  Jest, Cypress, Webpack, Vite, Git, Postman, Linux/Unix Environments
+                </p>
+              </div>
+
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/70 space-y-1 md:col-span-2">
+                <strong class="text-slate-900 block text-sm font-bold flex items-center gap-1.5">
+                  <span class="text-purple-600">🧠</span> Expertise:
+                </strong>
+                <p class="text-slate-700 text-xs sm:text-sm leading-relaxed">
+                  Algorithmic Optimization, Micro-Frontend Architecture, Low-Latency System Design, Mathematics, Information Technology, Automation Algorithms
+                </p>
+              </div>
+
+              <div class="p-3.5 bg-sky-50/80 rounded-xl border border-sky-200 flex items-center justify-between">
+                <strong class="text-slate-900 text-xs sm:text-sm flex items-center gap-1.5">
+                  <span>🗣️</span> English Proficiency:
+                </strong>
+                <span class="font-bold text-sky-800 bg-sky-100/90 px-3 py-1 rounded-lg text-xs border border-sky-200 font-mono">IELTS Band Score 8.5</span>
+              </div>
+
+              <div class="p-3.5 bg-indigo-50/80 rounded-xl border border-indigo-200 flex items-center justify-between">
+                <strong class="text-slate-900 text-xs sm:text-sm flex items-center gap-1.5">
+                  <span>📐</span> Critical Thinking Skills:
+                </strong>
+                <span class="font-bold text-indigo-800 bg-indigo-100/90 px-3 py-1 rounded-lg text-xs border border-indigo-200 font-mono">SAT Score: 1490 out of 1600</span>
+              </div>
+
+              <div class="p-3.5 bg-amber-50/80 rounded-xl border border-amber-200 flex items-center justify-between md:col-span-2">
+                <strong class="text-slate-900 text-xs sm:text-sm flex items-center gap-1.5">
+                  <span>🥋</span> Martial Arts:
+                </strong>
+                <span class="font-bold text-amber-900 bg-amber-100/90 px-3 py-1 rounded-lg text-xs border border-amber-200">Karate Black Belt</span>
+              </div>
+            </div>
+          </section>
+
+<!-- EDUCATION -->
+          <section id="education-section" class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-xs relative overflow-hidden">
+            <!-- Academic Campus Images Banner -->
+            <div class="h-32 -mx-6 -mt-6 sm:-mx-8 sm:-mt-8 mb-6 overflow-hidden relative">
+              <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80" alt="Stanford & MIT Academic Halls" class="w-full h-full object-cover" referrerpolicy="no-referrer" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
+              <span class="absolute bottom-3 left-6 sm:left-8 text-xs font-bold uppercase tracking-wider text-purple-800 bg-purple-50 px-2.5 py-1 rounded-md border border-purple-200">
+                🎓 Academic Degrees & Honors
+              </span>
+            </div>
+
+            <h3 class="text-2xl font-bold text-sky-600 border-b border-slate-100 pb-3 flex items-center gap-2">
+              <span>🎓</span> Education
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+              <!-- PhD Stanford -->
+              <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 hover:border-purple-300 transition-colors space-y-1">
+                <div class="text-xs font-bold text-purple-700 uppercase tracking-wider">Stanford University</div>
+                <h5 class="font-bold text-slate-900 text-base">Doctor of Philosophy (Ph.D.) in Computer Science</h5>
+                <p class="text-slate-600 text-xs">Stanford University, California, USA</p>
+                <div class="text-xs font-bold text-slate-800 pt-1">2024</div>
+              </div>
+
+              <!-- BS MIT -->
+              <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 hover:border-sky-300 transition-colors space-y-1">
+                <div class="text-xs font-bold text-sky-700 uppercase tracking-wider">MIT</div>
+                <h5 class="font-bold text-slate-900 text-base">Bachelor of Science in Computer Science and Engineering</h5>
+                <p class="text-slate-600 text-xs">Massachusetts Institute of Technology (MIT), Cambridge, USA</p>
+                <div class="text-xs font-bold text-slate-800 pt-1">2018</div>
+              </div>
+
+              <!-- HSC NDC -->
+              <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 hover:border-amber-300 transition-colors space-y-1">
+                <div class="text-xs font-bold text-amber-700 uppercase tracking-wider">Notre Dame College</div>
+                <h5 class="font-bold text-slate-900 text-base">Higher Secondary Certificate (HSC)</h5>
+                <p class="text-slate-600 text-xs">Notre Dame College, Dhaka, Bangladesh</p>
+                <div class="text-xs font-bold text-amber-800 pt-1">2013 (Stood First in Board)</div>
+              </div>
+
+              <!-- SSC MCPSC -->
+              <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 hover:border-emerald-300 transition-colors space-y-1">
+                <div class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Mirpur Cantonment Public School</div>
+                <h5 class="font-bold text-slate-900 text-base">Secondary School Certificate (SSC)</h5>
+                <p class="text-slate-600 text-xs">Mirpur Cantonment Public School and College, Dhaka</p>
+                <div class="text-xs font-bold text-emerald-800 pt-1">2010 (Stood First in Board)</div>
+              </div>
+            </div>
+          </section>
+
+          
+
+          <!-- PERSONAL, FAMILY & SPIRITUAL PROFILE + PASSIONS -->
+          <section id="personal-section" class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-xs relative overflow-hidden">
+            <!-- Cloud Image Banner for Family / Warmth -->
+            <div class="h-28 -mx-6 -mt-6 sm:-mx-8 sm:-mt-8 mb-6 overflow-hidden relative">
+              <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80" alt="Family and Home Warmth" class="w-full h-full object-cover" referrerpolicy="no-referrer" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
+              <span class="absolute bottom-3 left-6 sm:left-8 text-xs font-bold uppercase tracking-wider text-slate-800 bg-white/95 px-3 py-1 rounded-md backdrop-blur-xs border border-slate-200/80 shadow-2xs">
+                👨‍👩‍👧‍👦 Personal, Family & Spiritual Profile
+              </span>
+            </div>
+
+            <h3 class="text-2xl font-bold text-sky-600 border-b border-slate-100 pb-3 flex items-center gap-2">
+              <span>🏠</span> Personal & Family Background
+            </h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6">
+              <!-- Left Column: Family & Lineage (7 Cols) -->
+              <div class="lg:col-span-7 space-y-4">
+                <div class="flex flex-wrap items-center gap-3 pb-3 border-b border-slate-100 text-sm">
+                  <span class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 font-medium text-slate-800">
+                    <strong>Age:</strong> 30 (1994 Born)
+                  </span>
+                  <span class="p-2.5 bg-emerald-50 text-emerald-800 rounded-xl border border-emerald-200 font-medium">
+                    <strong>Religion:</strong> Islam (Muslim)
+                  </span>
+                </div>
+
+                <!-- Spouse Details -->
+                <div class="bg-slate-50/80 p-4 sm:p-5 rounded-2xl border border-slate-200/80 space-y-2">
+                  <div class="flex items-center gap-2 text-slate-900 font-bold text-base">
+                    <span>💍</span>
+                    <strong>Spouse:</strong> Syeda Areeba Fatima
+                  </div>
+                  <div class="pl-4 space-y-1 text-xs text-slate-600 border-l-2 border-sky-300">
+                    <p class="leading-relaxed"><small class="text-muted text-slate-700 font-medium">🩺 Bachelor of Medicine, Bachelor of Surgery (Dhaka Medical College)</small></p>
+                    <p class="leading-relaxed"><small class="text-muted text-slate-700 font-medium">🎓 Fellow of the College of Physicians and Surgeons (Medicine)</small></p>
+                    <p class="leading-relaxed"><small class="text-muted text-slate-700 font-medium">🏥 Resident Medical Officer</small></p>
+                    <p class="leading-relaxed"><small class="text-muted text-slate-700 font-medium">📍 Savar Upazila Health Complex</small></p>
+                    <p class="leading-relaxed"><small class="text-muted text-slate-700 font-medium">🏛️ Ministry of Health and Family Welfare</small></p>
+                  </div>
+                </div>
+
+                <!-- Children -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-amber-50/70 p-4 rounded-xl border border-amber-200/70">
+                    <strong class="text-slate-900 flex items-center gap-1.5 text-sm">👧 Daughter:</strong>
+                    <div class="text-base font-bold text-slate-800 mt-0.5">Arowa Tasnim Afifa</div>
+                    <div class="text-xs text-amber-800 font-semibold mt-0.5">Age: 5</div>
+                  </div>
+
+                  <div class="bg-sky-50/70 p-4 rounded-xl border border-sky-200/70">
+                    <strong class="text-slate-900 flex items-center gap-1.5 text-sm">👦 Son:</strong>
+                    <div class="text-base font-bold text-slate-800 mt-0.5">Arshad Tasnim Afif</div>
+                    <div class="text-xs text-sky-800 font-semibold mt-0.5">Age: 2</div>
+                  </div>
+                </div>
+
+                <!-- Parents & Sister -->
+                <div class="space-y-3 pt-2">
+                  <!-- Father -->
+                  <div class="bg-slate-50/80 p-4 rounded-xl border border-slate-200/80">
+                    <strong class="text-slate-900 flex items-center gap-1.5 font-bold text-sm">👨 Father: Md. Jobayer Hasan Shiplu</strong>
+                    <div class="mt-2 pl-3 space-y-1 text-xs text-slate-600 border-l-2 border-slate-300">
+                      <p><small class="text-muted font-semibold text-slate-800">💼 Current: Managing Director (MD), Denimach (Armana Group)</small></p>
+                      <p><small class="text-muted text-slate-600">👔 Former CEO, AWPL, ABA Group</small></p>
+                      <p><small class="text-muted text-slate-600">🏭 Former DGM, Square Denim Ltd.</small></p>
+                      <p><small class="text-muted text-slate-600">🎓 Education: Graduate of BUTEX</small></p>
+                      <p><small class="text-muted text-slate-600">✉️ Email: <a href="mailto:jobayerhasanshiplu@gmail.com" class="text-sky-600 hover:underline font-mono">jobayerhasanshiplu@gmail.com</a></small></p>
+                      <p><small class="text-muted text-slate-600">📞 Phone: <a href="tel:01734200012" class="text-sky-600 hover:underline font-mono">01734200012</a></small></p>
                     </div>
-                    <div class="mb-3">
-                        <h5 class="fw-bold mb-0">Bachelor of Science in Computer Science and Engineering</h5>
-                        <p class="text-muted">Massachusetts Institute of Technology (MIT), Cambridge, USA <br>
-                            <strong>2018</strong></p>
+                  </div>
+
+                  <!-- Mother -->
+                  <div class="bg-slate-50/80 p-4 rounded-xl border border-slate-200/80">
+                    <strong class="text-slate-900 flex items-center gap-1.5 font-bold text-sm">👩 Mother: Dr. Shahnaz Sultana</strong>
+                    <div class="mt-2 pl-3 space-y-1 text-xs text-slate-600 border-l-2 border-slate-300">
+                      <p><small class="text-muted font-semibold text-slate-800">🏥 Current: Director, Jamalpur Medical College & Hospital</small></p>
+                      <p><small class="text-muted text-slate-600">🩺 Former UH&FPO, Dhanbari Health Complex</small></p>
+                      <p><small class="text-muted text-slate-600">🩺 Former Medical Officer, Netrokona</small></p>
+                      <p><small class="text-muted text-slate-600">🎓 Education: MBBS, Major Ziaur Rahman Medical College, Bogura</small></p>
+                      <p><small class="text-muted text-slate-600">✉️ Email: <a href="mailto:shahanajsultana2123@outlook.com" class="text-sky-600 hover:underline font-mono">shahanajsultana2123@outlook.com</a></small></p>
+                      <p><small class="text-muted text-slate-600">📞 Phone: <a href="tel:01919421292" class="text-sky-600 hover:underline font-mono">01919421292</a></small></p>
                     </div>
-                    <div class="mb-3">
-                        <h5 class="fw-bold mb-0">Higher Secondary Certificate (HSC)</h5>
-                        <p class="text-muted">Notre Dame College, Dhaka, Bangladesh <br>
-                            <strong>2013</strong> (Stood First in Board)</p>
+                  </div>
+
+                  <!-- Sister -->
+                  <div class="bg-slate-50/80 p-4 rounded-xl border border-slate-200/80">
+                    <strong class="text-slate-900 flex items-center gap-1.5 font-bold text-sm">👩‍⚕️ Sister: Dr. Rifah Tasnia</strong>
+                    <div class="mt-2 pl-3 space-y-1 text-xs text-slate-600 border-l-2 border-slate-300">
+                      <p><small class="text-muted text-slate-800 font-semibold">🩺 Medical Officer, Chattogram (BCS Health Cadre)</small></p>
+                      <p><small class="text-muted text-slate-600">🎓 MBBS (Bachelor of Medicine, Bachelor of Surgery), Dhaka Medical College (DMC)</small></p>
+                      <p><small class="text-muted text-slate-600">🏫 HSC: Muminunnesa Govt. Women's College</small></p>
+                      <p><small class="text-muted text-slate-600">🏫 SSC: Shaheed Smrity Higher Secondary School</small></p>
                     </div>
-                    <div class="mb-3">
-                        <h5 class="fw-bold mb-0">Secondary School Certificate (SSC)</h5>
-                        <p class="text-muted">Mirpur Cantonment Public School and College, Dhaka<br>
-                         <strong>2010</strong> (Stood First in Board)</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column: Spiritual Sanctity & Hobbies (5 Cols) -->
+              <div class="lg:col-span-5 space-y-6">
+                <!-- Spiritual Milestones -->
+                <div class="bg-emerald-50/50 rounded-2xl border border-emerald-200/80 p-5 space-y-3">
+                  <div class="flex items-center gap-2 text-base font-bold text-emerald-900 border-b border-emerald-200/60 pb-2">
+                    <span>🕋</span> Spiritual Achievements
+                  </div>
+                  <div class="p-3 bg-white/90 border border-emerald-200 rounded-xl flex items-center gap-3">
+                    <span class="text-2xl">⭐</span>
+                    <div>
+                      <div class="font-bold text-slate-900 text-sm">Full Qur-an Hafiz</div>
+                      <div class="text-xs text-emerald-800">Complete memorization of the Holy Qur'an</div>
                     </div>
-                </section>
+                  </div>
+                  <div class="p-3 bg-white/90 border border-amber-200 rounded-xl flex items-center gap-3">
+                    <span class="text-2xl">🕋</span>
+                    <div>
+                      <div class="font-bold text-slate-900 text-sm">Performed Hajj (2016)</div>
+                      <div class="text-xs text-amber-900">Pilgrimage to Makkah Al-Mukarramah</div>
+                    </div>
+                  </div>
+                </div>
 
-<!-- HONORS & AWARDS -->
-<section class="mb-4">
-    <h3 class="text-primary border-bottom pb-2">Honors & Awards</h3>
-
-    <!-- National High School Programming Contest -->
-    <section class="mb-3">
-        <h4 class="text-success">National High School Programming Contest (NHSPC)</h4>
-        <ul class="lh-lg">
-            <li><strong>Top Finalist</strong> – 2008</li>
-            <li><strong>Runner Up</strong> – 2009</li>
-            <li><strong>Champion</strong> – 2010</li>
-            <li><strong>Champion</strong> – 2011</li>
-            <li><strong>Champion</strong> – 2012</li>
-        </ul>
-    </section>
-
-    <!-- Bangladesh Olympiad in Informatics -->
-    <section class="mb-3">
-        <h4 class="text-success">Bangladesh Olympiad in Informatics</h4>
-        <ul class="lh-lg">
-            <li><strong>Runner Up</strong> – 2008</li>
-            <li><strong>Champion</strong> – 2009</li>
-            <li><strong>Champion</strong> – 2010</li>
-            <li><strong>Champion</strong> – 2011</li>
-        </ul>
-    </section>
-
-    <!-- Bangladesh Mathematical Olympiad -->
-    <section class="mb-3">
-        <h4 class="text-success">Bangladesh Mathematical Olympiad (BDMO)</h4>
-        <ul class="lh-lg">
-            <li><strong>Top Finalist</strong> – 2008</li>
-            <li><strong>Runner Up</strong> – 2009</li>
-            <li><strong>Champion</strong> – 2010</li>
-        </ul>
-    </section>
-
-    <!-- International Olympiad in Informatics -->
-    <section class="mb-3">
-        <h4 class="text-success">International Olympiad in Informatics (IOI)</h4>
-        <ul class="lh-lg">
-            <li><strong>Bronze Medal</strong> – 2010</li>
-            <li><strong>Silver Medal</strong> – 2011</li>
-            <li><strong>Silver Medal</strong> – 2012</li>
-            <li><strong>Gold Medal</strong> – 2013</li>
-            <li><strong>Gold Medalist & Team Leader</strong> – 2014</li>
-        </ul>
-    </section>
-
-    <!-- International Mathematical Olympiad -->
-    <section class="mb-3">
-        <h4 class="text-success">International Mathematical Olympiad (IMO)</h4>
-        <ul class="lh-lg">
-            <li><strong>Bronze Medal</strong> – 2008</li>
-            <li><strong>Bronze Medal</strong> – 2009</li>
-            <li><strong>Silver Medal</strong> – 2011</li>
-            <li><strong>Silver Medal</strong> – 2012</li>
-            <li><strong>Gold Medalist & Team Leader</strong> – 2013</li>
-        </ul>
-    </section>
-
-    <!-- International Python Olympiad -->
-    <section class="mb-3">
-        <h4 class="text-success">International Python Olympiad</h4>
-        <ul class="lh-lg">
-            <li><strong>Champion</strong> – 2010</li>
-            <li><strong>Champion</strong> – 2011</li>
-            <li><strong>Champion</strong> – 2012</li>
-        </ul>
-    </section>
-
-    <!-- Google Code Jam -->
-    <section class="mb-3">
-        <h4 class="text-success">Google Code Jam</h4>
-        <ul class="lh-lg">
-            <li><strong>Champion</strong> – 2011</li>
-            <li><strong>Champion</strong> – 2012</li>
-        </ul>
-    </section>
-
-    <!-- Meta Hacker Cup -->
-    <section class="mb-3">
-        <h4 class="text-success">Meta Hacker Cup</h4>
-        <ul class="lh-lg">
-            <li><strong>Certified Top 0.001% Programmer</strong> – 2012</li>
-            <li><strong>Certified Top 0.001% Programmer</strong> – 2013</li>
-            <li><strong>Champion</strong> – 2014</li>
-            <li><strong>Champion</strong> – 2015</li>
-            <li><strong>Champion</strong> – 2016</li>
-        </ul>
-    </section>
-
-    <!-- International Collegiate Programming Contest -->
-    <section class="mb-3">
-        <h4 class="text-success">International Collegiate Programming Contest (ICPC)</h4>
-        <ul class="lh-lg">
-            <li><strong>Top Finalist</strong> – 2017</li>
-            <li><strong>World Champion</strong> – 2017</li>
-        </ul>
-    </section>
-
-<!-- The PROD Software Engineering Olympiad -->
-<section class="mb-3">
-    <h4 class="text-success">The PROD Software Engineering Olympiad</h4>
-    <ul class="lh-lg">
-        <li><strong>Top Finalist</strong> – 2020</li>
-        <li><strong>Runner Up (Frontend Track)</strong> – 2021</li>
-        <li><strong>Grand Prize Winner & Frontend Track Champion</strong> – 2022</li>
-    </ul>
-</section>
-
-<!-- CSSBattle Global League -->
-<section class="mb-3">
-    <h4 class="text-success">CSSBattle Global League</h4>
-    <ul class="lh-lg">
-        <li><strong>Monthly League Runner Up</strong> – 2021</li>
-        <li><strong>Seasonal Tournament Champion</strong> – 2022</li>
-        <li><strong>Global Rank #1 / Hall of ❤️ Leader</strong> – 2023 <br> All-Time Code-Golfing Record Holder</li>
-    </ul>
-</section>
-
-<!-- Frontend Mentor Platform -->
-<section class="mb-3">
-    <h4 class="text-success">Frontend Mentor Platform</h4>
-    <ul class="lh-lg">
-        <li><strong>Quarterly Challenge Runner Up</strong> – 2022</li>
-        <li><strong>Annual Developer Showcase Champion</strong> – 2023</li>
-        <li><strong>All-Time Wall of Fame Rank #1</strong> – 2024 <br> Master Component Architect Recognition</li>
-    </ul>
-</section>
-
-    <!-- CodeForces Competitive Programming Community -->
-    <section class="mb-3">
-        <h4 class="text-success">CodeForces Competitive Programming Community</h4>
-        <ul class="lh-lg">
-            <li><strong>Master Rank</strong> – 2010</li>
-            <li><strong>Grandmaster Rank</strong> – 2011</li>
-            <li><strong>Legendery Grandmaster Rank</strong> – 2012</li>
-            <li><strong>Tourist Supreme Rank</strong> - 2015 <br> Rating 4105 - World Record</li>
-        </ul>
-    </section>
-</section>
-
+                <!-- Hobbies & Passions -->
+                <div class="bg-slate-50/80 rounded-2xl border border-slate-200/80 p-5 space-y-3">
+                  <div class="flex items-center gap-2 text-base font-bold text-slate-900 border-b border-slate-200 pb-2">
+                    <span>♟️</span> Hobbies & Passions
+                  </div>
+                  <div class="p-3 bg-white border border-slate-200/70 rounded-xl flex items-center gap-3">
+                    <span class="text-2xl">♟️</span>
+                    <div>
+                      <strong class="text-sm text-slate-900">Chess:</strong>
+                      <span class="text-slate-600 block text-xs">Strategy & patience</span>
+                    </div>
+                  </div>
+                  <div class="p-3 bg-white border border-slate-200/70 rounded-xl flex items-center gap-3">
+                    <span class="text-2xl">💻</span>
+                    <div>
+                      <strong class="text-sm text-slate-900">Programming:</strong>
+                      <span class="text-slate-600 block text-xs">Creative problem solving</span>
+                    </div>
+                  </div>
+                  <div class="p-3 bg-white border border-slate-200/70 rounded-xl flex items-center gap-3">
+                    <span class="text-2xl">🥋</span>
+                    <div>
+                      <strong class="text-sm text-slate-900">Karate:</strong>
+                      <span class="text-slate-600 block text-xs">Discipline & focus</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
 <!-- REFERENCES -->
-<section class="mb-4">
-    <h3 class="text-primary border-bottom pb-2">References</h3>
-    
-    <div class="mb-3">
-        <h5 class="fw-bold mb-0">Dr. Hal Abelson</h5>
-        <p class="text-muted mb-0">Professor of Computer Science and Engineering</p>
-        <p class="text-muted">Massachusetts Institute of Technology (MIT)</p>
+          <section id="references-section" class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-xs relative overflow-hidden">
+            <h3 class="text-2xl font-bold text-sky-600 border-b border-slate-100 pb-3 flex items-center gap-2">
+              <span>👥</span> References
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/80 space-y-0.5">
+                <h5 class="font-bold text-slate-900 text-base">Dr. Hal Abelson</h5>
+                <p class="text-slate-600 text-xs font-medium">Professor of Computer Science and Engineering</p>
+                <p class="text-slate-500 text-xs">Massachusetts Institute of Technology (MIT)</p>
+              </div>
+
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/80 space-y-0.5">
+                <h5 class="font-bold text-slate-900 text-base">Dr. Mehran Sahami</h5>
+                <p class="text-slate-600 text-xs font-medium">Professor and Associate Chair of Computer Science</p>
+                <p class="text-slate-500 text-xs">Stanford University</p>
+              </div>
+
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/80 space-y-0.5">
+                <h5 class="font-bold text-slate-900 text-base">Andy Jassy</h5>
+                <p class="text-slate-600 text-xs font-medium">President and Chief Executive Officer</p>
+                <p class="text-slate-500 text-xs">Amazon.com, Inc.</p>
+              </div>
+
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/80 space-y-0.5">
+                <h5 class="font-bold text-slate-900 text-base">Dr. Werner Vogels</h5>
+                <p class="text-slate-600 text-xs font-medium">Vice President and Chief Technology Officer</p>
+                <p class="text-slate-500 text-xs">Amazon.com, Inc.</p>
+              </div>
+            </div>
+          </section>
+
+      </div>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- DETAILED MODAL POPUP FOR AWARDS CARDS      -->
+    <!-- OFFICIAL CERTIFICATE VERIFICATION (NO PIC) -->
+    <!-- ========================================== -->
+    <div id="award-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop bg-slate-950/80 hidden opacity-0 transition-opacity duration-300">
+      <div class="bg-slate-900 border border-slate-700 max-w-2xl w-full rounded-3xl shadow-2xl p-6 sm:p-8 relative text-white max-h-[90vh] overflow-y-auto space-y-6">
+        
+        <!-- Close Button -->
+        <button onclick="closeAwardModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-lg font-bold transition-all cursor-pointer">
+          ✕
+        </button>
+
+        <div class="flex items-center gap-3">
+          <span id="modal-icon" class="text-3xl sm:text-4xl">🏆</span>
+          <div>
+            <div id="modal-category" class="text-xs font-bold uppercase tracking-wider text-amber-400">Contest Spotlight</div>
+            <h3 id="modal-title" class="text-xl sm:text-2xl font-black text-white">National High School Programming Contest (NHSPC)</h3>
+          </div>
+        </div>
+
+        <!-- Official Certificate Verification Seal Strip (No Picture) -->
+        <div class="p-4 rounded-2xl bg-slate-800/80 border border-slate-700 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🎖️</span>
+            <span id="modal-badge-tag" class="text-xs font-bold px-3 py-1 rounded-md bg-amber-500 text-slate-950 font-mono uppercase tracking-wider">Official Certificate Verified</span>
+          </div>
+          <span class="text-xs text-slate-400 font-mono">ID: RT-ICPC-HONORS-VERIFIED</span>
+        </div>
+
+        <!-- Exact Original List in Modal -->
+        <div>
+          <h4 class="text-sm font-bold text-slate-300 uppercase tracking-wider mb-3">All Verified Achievements:</h4>
+          <ul id="modal-records" class="space-y-2 text-sm">
+            <!-- Populated via JS -->
+          </ul>
+        </div>
+
+        <div class="p-4 bg-slate-800/80 rounded-2xl border border-slate-700 text-xs text-slate-300 leading-relaxed">
+          <p id="modal-description">Detailed algorithmic problem solving metrics and verified competition ranking records.</p>
+        </div>
+
+        <div class="flex justify-end pt-2">
+          <button onclick="closeAwardModal()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl border border-slate-600 transition-colors cursor-pointer">
+            Close Modal
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="mb-3">
-        <h5 class="fw-bold mb-0">Dr. Mehran Sahami</h5>
-        <p class="text-muted mb-0">Professor and Associate Chair of Computer Science</p>
-        <p class="text-muted">Stanford University</p>
-    </div>
+<!-- FOOTER WITH PRESERVED EXACT ORIGINAL TEXT -->
+    <!-- ========================================== -->
+    <footer class="bg-white border-t border-slate-200 mt-16 py-10 px-4 sm:px-6 lg:px-8 text-center">
+      <div class="max-w-4xl mx-auto space-y-3">
+        <p class="font-bold text-slate-800 text-base text-center">
+          &copy; Rayaan Tasnim Curriculum Vitae
+        </p>
+        <small class="block text-slate-500 text-xs leading-relaxed max-w-2xl mx-auto text-center">
+          Disclaimer: The details in this CV such as MIT graduation, Amazon programmer role, 
+          and IOI/IMO Gold medals are entirely fictional and represent dream projects only. 
+          They are not related to or endorsed by any real company, institution, or organization. 
+          This CV is for creative/personal presentation purposes only.
+        </small>
+        <div class="pt-4 text-xs text-slate-400 flex items-center justify-center gap-4">
+          <span>✨ Designed with modern CSS Grid & Tailwind</span>
+          <span>•</span>
+          <span>⚡ 3D Parallax & Web Audio Fanfare</span>
+        </div>
+      </div>
+    </footer>
 
-    <div class="mb-3">
-        <h5 class="fw-bold mb-0">Andy Jassy</h5>
-        <p class="text-muted mb-0">President and Chief Executive Officer</p>
-        <p class="text-muted">Amazon.com, Inc.</p>
-    </div>
+<!-- SCRIPTS: WEB AUDIO FLUTE & CELEBRATION, CONFETTI ENGINE,   -->
+    <!-- 3D SCROLL FREEZE & CHANGEABLE AWARDS CARDS                 -->
+    <!-- ========================================================== -->
+    <script>
+      /* ========================================================= */
+      /* 1. ALL 13 HONORS & AWARDS CONTEST DATA (EXACT VERBATIM)   */
+      /* ========================================================= */
+      
 
-    <div class="mb-3">
-        <h5 class="fw-bold mb-0">Dr. Werner Vogels</h5>
-        <p class="text-muted mb-0">Vice President and Chief Technology Officer</p>
-        <p class="text-muted">Amazon.com, Inc.</p>
-    </div>
-</section>
-            </div> <!-- End of Right Column -->
-        </div> <!-- End of Row -->
-    </div> <!-- End of Container -->
+      /* ========================================================= */
+      /* 1. RESPONSIVE NAVIGATION DRAWER TOGGLER                  */
+      /* ========================================================= */
+      function toggleMobileNav() {
+        const drawer = document.getElementById("mobile-nav-drawer");
+        const hamburger = document.getElementById("toggler-icon-hamburger");
+        const close = document.getElementById("toggler-icon-close");
+        const btn = document.getElementById("nav-toggler-btn");
+        if (!drawer) return;
+        const isHidden = drawer.classList.contains("hidden");
+        if (isHidden) {
+          drawer.classList.remove("hidden");
+          if (hamburger) hamburger.classList.add("hidden");
+          if (close) close.classList.remove("hidden");
+          if (btn) btn.setAttribute("aria-expanded", "true");
+        } else {
+          drawer.classList.add("hidden");
+          if (hamburger) hamburger.classList.remove("hidden");
+          if (close) close.classList.add("hidden");
+          if (btn) btn.setAttribute("aria-expanded", "false");
+        }
+      }
 
-<footer>
-  <p>&copy; Rayaan Tasnim Curriculum Vitae</p>
-  <small style="display:block; margin-top:8px; color:#666; font-size:13px;">
-    Disclaimer: The details in this CV such as MIT graduation, Amazon programmer role, 
-    and IOI/IMO Gold medals are entirely fictional and represent dream projects only. 
-    They are not related to or endorsed by any real company, institution, or organization. 
-    This CV is for creative/personal presentation purposes only.
-  </small>
-</footer>
+      function closeMobileNav() {
+        const drawer = document.getElementById("mobile-nav-drawer");
+        const hamburger = document.getElementById("toggler-icon-hamburger");
+        const close = document.getElementById("toggler-icon-close");
+        const btn = document.getElementById("nav-toggler-btn");
+        if (drawer && !drawer.classList.contains("hidden")) {
+          drawer.classList.add("hidden");
+          if (hamburger) hamburger.classList.remove("hidden");
+          if (close) close.classList.add("hidden");
+          if (btn) btn.setAttribute("aria-expanded", "false");
+        }
+      }
 
+      // Auto-close on resize to large screen
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 1280) {
+          closeMobileNav();
+        }
+      });
 
-    <!-- Bootstrap 5.3.8 JS Bundle CDN -->
-    <script src="https://jsdelivr.net" integrity="sha384-C6Rzs3gTPviFEbahvSR71maXyRIHLb91yGl5O9I5ILy+dN9+nJOZ" crossorigin="anonymous"></script>
-    <!-- External Custom JS -->
-    <script src="script.js"></script>
-</body>
+      /* ========================================================= */
+      /* 2. HONORS & ACHIEVEMENTS DATA (VERBATIM 13 CONTESTS)      */
+      /* ========================================================= */
+      const AWARDS_DATA = [
+        {
+          id: 1,
+          category: "National High School",
+          title: "National High School Programming Contest (NHSPC)",
+          subtitle: "National premier computational championship for high-school algorithmists in Bangladesh.",
+          titleColor: "text-emerald-400",
+          categoryColor: "bg-emerald-500",
+          glowColor: "bg-emerald-500/20",
+          bannerImg: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "High school coders programming algorithms in auditorium",
+          badge: "Triple Champion Record",
+          tenure: "2008 – 2012",
+          firstYear: "2008",
+          totalAwards: 5,
+          bestResult: "Champion (3x)",
+          records: [
+            { text: "Top Finalist", year: "2008", isChamp: false, icon: "⭐" },
+            { text: "Runner Up", year: "2009", isChamp: false, icon: "🥈" },
+            { text: "Champion", year: "2010", isChamp: true, icon: "🏆" },
+            { text: "Champion", year: "2011", isChamp: true, icon: "🏆" },
+            { text: "Champion", year: "2012", isChamp: true, icon: "🏆" }
+          ]
+        },
+        {
+          id: 2,
+          category: "National Informatics",
+          title: "Bangladesh Olympiad in Informatics",
+          subtitle: "Official national informatics competition selecting the international national squad.",
+          titleColor: "text-teal-400",
+          categoryColor: "bg-teal-500",
+          glowColor: "bg-teal-500/20",
+          bannerImg: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "Algorithmic computer terminal and code matrices",
+          badge: "3-Time Consecutive Champion",
+          tenure: "2008 – 2011",
+          firstYear: "2008",
+          totalAwards: 4,
+          bestResult: "Champion (3x)",
+          records: [
+            { text: "Runner Up", year: "2008", isChamp: false, icon: "🥈" },
+            { text: "Champion", year: "2009", isChamp: true, icon: "🏆" },
+            { text: "Champion", year: "2010", isChamp: true, icon: "🏆" },
+            { text: "Champion", year: "2011", isChamp: true, icon: "🏆" }
+          ]
+        },
+        {
+          id: 3,
+          category: "National Mathematics",
+          title: "Bangladesh Mathematical Olympiad (BDMO)",
+          subtitle: "Elite mathematical problem-solving tournament across combinatorics, number theory & geometry.",
+          titleColor: "text-indigo-400",
+          categoryColor: "bg-indigo-500",
+          glowColor: "bg-indigo-500/20",
+          bannerImg: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "Mathematical proofs, formulas, and geometric concepts",
+          badge: "Gold Trophy Winner",
+          tenure: "2008 – 2010",
+          firstYear: "2008",
+          totalAwards: 3,
+          bestResult: "Champion",
+          records: [
+            { text: "Top Finalist", year: "2008", isChamp: false, icon: "⭐" },
+            { text: "Runner Up", year: "2009", isChamp: false, icon: "🥈" },
+            { text: "Champion", year: "2010", isChamp: true, icon: "🏆" }
+          ]
+        },
+        {
+          id: 4,
+          category: "International Informatics",
+          title: "International Olympiad in Informatics (IOI)",
+          subtitle: "World championship in competitive programming and algorithmic data structures.",
+          titleColor: "text-amber-400",
+          categoryColor: "bg-amber-500",
+          glowColor: "bg-amber-500/20",
+          bannerImg: "https://images.unsplash.com/photo-1569517282132-25d22f4573e6?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "International gold medals on ribbons for world olympiad",
+          badge: "Double Gold Medalist & Team Leader",
+          tenure: "2010 – 2014",
+          firstYear: "2010",
+          totalAwards: 5,
+          bestResult: "Gold Medal (2x)",
+          records: [
+            { text: "Bronze Medal", year: "2010", isChamp: false, icon: "🥉" },
+            { text: "Silver Medal", year: "2011", isChamp: false, icon: "🥈" },
+            { text: "Silver Medal", year: "2012", isChamp: false, icon: "🥈" },
+            { text: "Gold Medal", year: "2013", isChamp: true, icon: "🥇" },
+            { text: "Gold Medalist & Team Leader", year: "2014", isChamp: true, icon: "🥇" }
+          ]
+        },
+        {
+          id: 5,
+          category: "International Mathematics",
+          title: "International Mathematical Olympiad (IMO)",
+          subtitle: "Preeminent worldwide mathematics championship for exceptional secondary school students.",
+          titleColor: "text-rose-400",
+          categoryColor: "bg-rose-500",
+          glowColor: "bg-rose-500/20",
+          bannerImg: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "Prestigious mathematics olympiad medal and analytical drafts",
+          badge: "Gold Medalist & Team Leader",
+          tenure: "2008 – 2013",
+          firstYear: "2008",
+          totalAwards: 5,
+          bestResult: "Gold Medal & Leader",
+          records: [
+            { text: "Bronze Medal", year: "2008", isChamp: false, icon: "🥉" },
+            { text: "Bronze Medal", year: "2009", isChamp: false, icon: "🥉" },
+            { text: "Silver Medal", year: "2011", isChamp: false, icon: "🥈" },
+            { text: "Silver Medal", year: "2012", isChamp: false, icon: "🥈" },
+            { text: "Gold Medalist & Team Leader", year: "2013", isChamp: true, icon: "🥇" }
+          ]
+        },
+        {
+          id: 6,
+          category: "International Python",
+          title: "International Python Olympiad",
+          subtitle: "Global championship in high-performance Python algorithm design and automation.",
+          titleColor: "text-sky-400",
+          categoryColor: "bg-sky-500",
+          glowColor: "bg-sky-500/20",
+          bannerImg: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "Python script and high-speed algorithm engineering code",
+          badge: "3-Time International Champion",
+          tenure: "2010 – 2012",
+          firstYear: "2010",
+          totalAwards: 3,
+          bestResult: "Champion (3x)",
+          records: [
+            { text: "Champion", year: "2010", isChamp: true, icon: "🏆" },
+            { text: "Champion", year: "2011", isChamp: true, icon: "🏆" },
+            { text: "Champion", year: "2012", isChamp: true, icon: "🏆" }
+          ]
+        },
+        {
+          id: 7,
+          category: "Global Industry Trophy",
+          title: "Google Code Jam",
+          subtitle: "Google's legendary global competition testing algorithmic mastery under time constraints.",
+          titleColor: "text-red-400",
+          categoryColor: "bg-red-500",
+          glowColor: "bg-red-500/20",
+          bannerImg: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "International tech championship arena and stage lights",
+          badge: "Back-to-Back World Champion",
+          tenure: "2011 – 2012",
+          firstYear: "2011",
+          totalAwards: 2,
+          bestResult: "World Champion (2x)",
+          records: [
+            { text: "Champion", year: "2011", isChamp: true, icon: "🏆" },
+            { text: "Champion", year: "2012", isChamp: true, icon: "🏆" }
+          ]
+        },
+        {
+          id: 8,
+          category: "Global Industry Trophy",
+          title: "Meta Hacker Cup",
+          subtitle: "Meta's flagship worldwide algorithmic contest with over 30,000 elite global engineers.",
+          titleColor: "text-blue-400",
+          categoryColor: "bg-blue-500",
+          glowColor: "bg-blue-500/20",
+          bannerImg: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "Cybersecurity and algorithmic speed competition terminal",
+          badge: "Triple Consecutive Champion",
+          tenure: "2012 – 2016",
+          firstYear: "2012",
+          totalAwards: 5,
+          bestResult: "Champion (3x)",
+          records: [
+            { text: "Certified Top 0.001% Programmer", year: "2012", isChamp: true, icon: "⭐" },
+            { text: "Certified Top 0.001% Programmer", year: "2013", isChamp: true, icon: "⭐" },
+            { text: "Champion", year: "2014", isChamp: true, icon: "🏆" },
+            { text: "Champion", year: "2015", isChamp: true, icon: "🏆" },
+            { text: "Champion", year: "2016", isChamp: true, icon: "🏆" }
+          ]
+        },
+        {
+          id: 9,
+          category: "Collegiate World Finals",
+          title: "International Collegiate Programming Contest (ICPC)",
+          subtitle: "The Olympics of collegiate computer programming competing against premier global universities.",
+          titleColor: "text-amber-300",
+          categoryColor: "bg-amber-500",
+          glowColor: "bg-amber-500/25",
+          bannerImg: "https://images.unsplash.com/photo-1578269174936-2709b6aeb913?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "Collegiate world finals championship gold trophy cup",
+          badge: "ICPC World Champion 2017",
+          tenure: "2017",
+          firstYear: "2017",
+          totalAwards: 2,
+          bestResult: "World Champion",
+          records: [
+            { text: "Top Finalist", year: "2017", isChamp: false, icon: "⭐" },
+            { text: "World Champion", year: "2017", isChamp: true, icon: "🏆" }
+          ]
+        },
+        {
+          id: 10,
+          category: "Software Engineering",
+          title: "The PROD Software Engineering Olympiad",
+          subtitle: "Elite full-stack architecture and frontend systems design competition.",
+          titleColor: "text-purple-400",
+          categoryColor: "bg-purple-500",
+          glowColor: "bg-purple-500/20",
+          bannerImg: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "Software engineering systems dashboard and architecture telemetry",
+          badge: "Grand Prize Winner & Champion",
+          tenure: "2020 – 2022",
+          firstYear: "2020",
+          totalAwards: 3,
+          bestResult: "Grand Prize Winner",
+          records: [
+            { text: "Top Finalist", year: "2020", isChamp: false, icon: "⭐" },
+            { text: "Runner Up (Frontend Track)", year: "2021", isChamp: false, icon: "🥈" },
+            { text: "Grand Prize Winner & Frontend Track Champion", year: "2022", isChamp: true, icon: "🏆" }
+          ]
+        },
+        {
+          id: 11,
+          category: "Code-Golf & CSS",
+          title: "CSSBattle Global League",
+          subtitle: "Global leaderboard testing pixel-perfect CSS rendering and minimal-byte code-golfing.",
+          titleColor: "text-orange-400",
+          categoryColor: "bg-orange-500",
+          glowColor: "bg-orange-500/20",
+          bannerImg: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "Web design canvas and frontend code golf art",
+          badge: "Global Rank #1 / Hall of ❤️ Leader",
+          tenure: "2021 – 2023",
+          firstYear: "2021",
+          totalAwards: 3,
+          bestResult: "Global Rank #1",
+          records: [
+            { text: "Monthly League Runner Up", year: "2021", isChamp: false, icon: "🥈" },
+            { text: "Seasonal Tournament Champion", year: "2022", isChamp: true, icon: "🏆" },
+            { text: "Global Rank #1 / Hall of ❤️ Leader (All-Time Code-Golfing Record Holder)", year: "2023", isChamp: true, icon: "👑" }
+          ]
+        },
+        {
+          id: 12,
+          category: "Architecture & UI",
+          title: "Frontend Mentor Platform",
+          subtitle: "International component architecture and production web development showcase.",
+          titleColor: "text-violet-400",
+          categoryColor: "bg-violet-500",
+          glowColor: "bg-violet-500/20",
+          bannerImg: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "Web design systems and component architecture wireframes",
+          badge: "All-Time Wall of Fame Rank #1",
+          tenure: "2022 – 2024",
+          firstYear: "2022",
+          totalAwards: 3,
+          bestResult: "Wall of Fame Rank #1",
+          records: [
+            { text: "Quarterly Challenge Runner Up", year: "2022", isChamp: false, icon: "🥈" },
+            { text: "Annual Developer Showcase Champion", year: "2023", isChamp: true, icon: "🏆" },
+            { text: "All-Time Wall of Fame Rank #1 (Master Component Architect Recognition)", year: "2024", isChamp: true, icon: "👑" }
+          ]
+        },
+        {
+          id: 13,
+          category: "Competitive Platform",
+          title: "CodeForces Competitive Programming Community",
+          subtitle: "The most rigorous global competitive programming rating platform worldwide.",
+          titleColor: "text-rose-500",
+          categoryColor: "bg-rose-600",
+          glowColor: "bg-rose-500/25",
+          bannerImg: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80",
+          bannerAlt: "Algorithmic programming terminal and rating benchmark",
+          badge: "Tourist Supreme Rank • Rating 4105",
+          tenure: "2010 – 2015",
+          firstYear: "2010",
+          totalAwards: 4,
+          bestResult: "Tourist Supreme (4105)",
+          records: [
+            { text: "Master Rank", year: "2010", isChamp: false, icon: "⭐" },
+            { text: "Grandmaster Rank", year: "2011", isChamp: false, icon: "⭐" },
+            { text: "Legendery Grandmaster Rank", year: "2012", isChamp: true, icon: "🏆" },
+            { text: "Tourist Supreme Rank (Rating 4105 - World Record)", year: "2015", isChamp: true, icon: "👑" }
+          ]
+        }
+      ]
+
+      /* ========================================================= */
+      /* 3. STATE & CAROUSEL CONTROLS                              */
+      /* ========================================================= */
+      let currentAwardIndex = 0;
+      const totalAwards = AWARDS_DATA.length;
+      const awardsSection = document.getElementById("awards-section");
+      const card3D = document.getElementById("award-3d-card");
+      const ambientGlow = document.getElementById("ambient-glow");
+      const counterCurrent = document.getElementById("card-counter-current");
+      const counterTotal = document.getElementById("card-counter-total");
+      const subCounter = document.getElementById("card-sub-counter");
+      const progressBar = document.getElementById("awards-scroll-progress");
+      const navPillsContainer = document.getElementById("card-nav-pills");
+
+      if (counterTotal) counterTotal.innerText = totalAwards;
+
+      // Initialize Navigation Pills
+      function renderNavPills() {
+        if (!navPillsContainer) return;
+        navPillsContainer.innerHTML = "";
+        AWARDS_DATA.forEach((item, idx) => {
+          const btn = document.createElement("button");
+          btn.className = `px-2.5 sm:px-3 py-1 text-xs font-mono rounded-lg border transition-all cursor-pointer ${
+            idx === currentAwardIndex
+              ? "bg-amber-500 text-slate-950 font-black border-amber-400 scale-105 shadow-md"
+              : "bg-slate-800/90 text-slate-400 border-slate-700/80 hover:text-white hover:bg-slate-700"
+          }`;
+          btn.innerText = idx + 1;
+          btn.title = item.title;
+          btn.onclick = () => setAwardCard(idx);
+          navPillsContainer.appendChild(btn);
+        });
+      }
+      renderNavPills();
+
+      // Render the current active card: NO PICTURE, CATCHING FULL SCREEN!
+      function renderActiveAwardCard(animate = true) {
+        const data = AWARDS_DATA[currentAwardIndex];
+        if (!data) return;
+        
+        if (animate && card3D) {
+          card3D.style.transform = "perspective(1200px) rotateY(10deg) scale(0.97)";
+          card3D.style.opacity = "0.75";
+        }
+
+        setTimeout(() => {
+          const catBadge = document.getElementById("card-category-badge");
+          if (catBadge) {
+            catBadge.innerText = data.category;
+            catBadge.className = `text-[11px] sm:text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full text-white shadow-md ${data.categoryColor}`;
+          }
+
+          const rankBadge = document.getElementById("card-rank-badge");
+          if (rankBadge) rankBadge.innerText = data.badge;
+
+          const tenureTag = document.getElementById("card-tenure-tag");
+          if (tenureTag) tenureTag.innerText = data.tenure;
+
+          const statTotal = document.getElementById("stat-total-awards");
+          if (statTotal) statTotal.innerText = data.totalAwards;
+
+          const statFirst = document.getElementById("stat-first-year");
+          if (statFirst) statFirst.innerText = data.firstYear;
+
+          const statBest = document.getElementById("stat-best-result");
+          if (statBest) statBest.innerText = data.bestResult;
+          
+          const title = document.getElementById("card-title");
+          if (title) {
+            title.innerText = data.title;
+            title.className = `text-xl sm:text-2xl lg:text-3xl font-black tracking-tight leading-snug flex items-center gap-2 ${data.titleColor}`;
+          }
+          
+          const subtitle = document.getElementById("card-subtitle");
+          if (subtitle) subtitle.innerText = data.subtitle;
+
+          // Render records list catching full screen in 3-column responsive grid!
+          const list = document.getElementById("card-records-list");
+          if (list) {
+            list.innerHTML = "";
+            data.records.forEach(r => {
+              const li = document.createElement("li");
+              const icon = r.icon || (r.isChamp ? "🏆" : "⭐");
+              if (r.isChamp) {
+                li.className = "flex items-start justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-emerald-950/50 border border-emerald-500/40 text-emerald-100 font-medium shadow-2xs hover:border-emerald-400/80 transition-all";
+                li.innerHTML = `
+                  <div class="flex items-start gap-2.5">
+                    <span class="text-xl shrink-0 mt-0.5">${icon}</span>
+                    <div>
+                      <strong class="text-xs sm:text-sm text-white block leading-snug">${r.text}</strong>
+                      <span class="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-bold uppercase tracking-wider mt-1">
+                        <span>👑</span> Champion Award
+                      </span>
+                    </div>
+                  </div>
+                  <span class="text-xs font-mono font-bold text-emerald-300 bg-emerald-950/90 px-2 py-0.5 rounded border border-emerald-500/40 shrink-0">${r.year}</span>
+                `;
+              } else {
+                li.className = "flex items-start justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-slate-800/70 border border-slate-700/70 text-slate-200 shadow-2xs hover:border-slate-600 transition-all";
+                li.innerHTML = `
+                  <div class="flex items-start gap-2.5">
+                    <span class="text-xl shrink-0 mt-0.5">${icon}</span>
+                    <div>
+                      <strong class="text-xs sm:text-sm text-slate-100 block leading-snug">${r.text}</strong>
+                      <span class="inline-flex items-center gap-1 text-[10px] text-amber-400/90 font-medium mt-1">
+                        <span>⭐</span> Verified Honor
+                      </span>
+                    </div>
+                  </div>
+                  <span class="text-xs font-mono font-bold text-amber-400 bg-slate-900/90 px-2 py-0.5 rounded border border-slate-700/60 shrink-0">${r.year}</span>
+                `;
+              }
+              list.appendChild(li);
+            });
+          }
+
+          if (counterCurrent) counterCurrent.innerText = currentAwardIndex + 1;
+          if (subCounter) subCounter.innerText = currentAwardIndex + 1;
+          if (progressBar) progressBar.style.width = `${((currentAwardIndex + 1) / totalAwards) * 100}%`;
+          if (ambientGlow) ambientGlow.className = `absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full blur-3xl pointer-events-none transition-all duration-700 ${data.glowColor}`;
+
+          renderNavPills();
+
+          if (animate && card3D) {
+            card3D.style.transform = "perspective(1200px) rotateY(0deg) scale(1)";
+            card3D.style.opacity = "1";
+          }
+        }, animate ? 140 : 0);
+      }
+
+      function nextAwardCard() {
+        currentAwardIndex = (currentAwardIndex + 1) % totalAwards;
+        renderActiveAwardCard(true);
+      }
+
+      function prevAwardCard() {
+        currentAwardIndex = (currentAwardIndex - 1 + totalAwards) % totalAwards;
+        renderActiveAwardCard(true);
+      }
+
+      function setAwardCard(index) {
+        if (index >= 0 && index < totalAwards && index !== currentAwardIndex) {
+          currentAwardIndex = index;
+          renderActiveAwardCard(true);
+        }
+      }
+
+      /* ========================================================= */
+      /* 4. SCROLL-PINNING ENGINE (STICKY VIEWPORT TRANSFORMATION) */
+      /* ========================================================= */
+      let lastScrollY = window.scrollY;
+      let isScrolling = false;
+
+      function updateAwardsOnScroll() {
+        if (!awardsSection) return;
+        const rect = awardsSection.getBoundingClientRect();
+        const sectionTop = rect.top;
+        const sectionHeight = rect.height;
+        const windowHeight = window.innerHeight;
+
+        if (sectionTop <= 0 && rect.bottom >= windowHeight) {
+          const totalScrollableDistance = sectionHeight - windowHeight;
+          const currentProgress = Math.abs(sectionTop) / totalScrollableDistance;
+          const clampedProgress = Math.max(0, Math.min(1, currentProgress));
+          const calculatedIndex = Math.min(
+            totalAwards - 1,
+            Math.floor(clampedProgress * totalAwards)
+          );
+
+          if (calculatedIndex !== currentAwardIndex) {
+            currentAwardIndex = calculatedIndex;
+            renderActiveAwardCard(true);
+          }
+        }
+      }
+
+      window.addEventListener("scroll", () => {
+        if (!isScrolling) {
+          window.requestAnimationFrame(() => {
+            updateAwardsOnScroll();
+            isScrolling = false;
+          });
+          isScrolling = true;
+        }
+      }, { passive: true });
+
+      // Wheel listener inside awards viewport for fluid switching
+      const awardsViewport = document.getElementById("awards-sticky-viewport");
+      let wheelDebounce = false;
+      if (awardsViewport) {
+        awardsViewport.addEventListener("wheel", (e) => {
+          const rect = awardsSection.getBoundingClientRect();
+          if (rect.top <= 20 && rect.bottom >= window.innerHeight - 20) {
+            if (!wheelDebounce && Math.abs(e.deltaY) > 40) {
+              wheelDebounce = true;
+              if (e.deltaY > 0) nextAwardCard();
+              else prevAwardCard();
+              setTimeout(() => { wheelDebounce = false; }, 280);
+            }
+          }
+        }, { passive: true });
+
+        // Touch support for swipe transitions
+        let touchStartY = 0;
+        let touchStartX = 0;
+        awardsViewport.addEventListener("touchstart", (e) => {
+          touchStartY = e.touches[0].clientY;
+          touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        awardsViewport.addEventListener("touchend", (e) => {
+          const touchEndY = e.changedTouches[0].clientY;
+          const touchEndX = e.changedTouches[0].clientX;
+          const diffX = touchEndX - touchStartX;
+          const diffY = touchEndY - touchStartY;
+          if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX < 0) nextAwardCard();
+            else prevAwardCard();
+          } else if (Math.abs(diffY) > 50) {
+            if (diffY < 0) nextAwardCard();
+            else prevAwardCard();
+          }
+        }, { passive: true });
+      }
+
+      /* ========================================================= */
+      /* 5. MODAL POPUP SYSTEM (VERIFIED RECORD SHOWCASE, NO PIC)  */
+      /* ========================================================= */
+      const modal = document.getElementById("award-modal");
+      function openCurrentCardModal() {
+        const data = AWARDS_DATA[currentAwardIndex];
+        if (!data) return;
+        document.getElementById("modal-title").innerText = data.title;
+        document.getElementById("modal-category").innerText = data.category + " Spotlight";
+        document.getElementById("modal-badge-tag").innerText = data.badge;
+        document.getElementById("modal-description").innerText = data.subtitle + " Official verified competition performance record and hall of fame entry.";
+
+        const list = document.getElementById("modal-records");
+        if (list) {
+          list.innerHTML = "";
+          data.records.forEach(r => {
+            const li = document.createElement("li");
+            const icon = r.icon || (r.isChamp ? "🏆" : "⭐");
+            li.className = "flex items-center justify-between p-3 rounded-xl bg-slate-800 border border-slate-700 shadow-sm";
+            li.innerHTML = `<span class="${r.isChamp ? 'text-emerald-400 font-bold flex items-center gap-2' : 'text-slate-200 flex items-center gap-2'}"><span class="text-base">${icon}</span><strong>${r.text}</strong></span> <span class="font-mono font-bold text-amber-400 bg-slate-900 px-2.5 py-1 rounded-md border border-slate-700">${r.year}</span>`;
+            list.appendChild(li);
+          });
+        }
+
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+          modal.classList.remove("opacity-0");
+        }, 10);
+      }
+
+      function closeAwardModal() {
+        modal.classList.add("opacity-0");
+        setTimeout(() => {
+          modal.classList.add("hidden");
+        }, 300);
+      }
+
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeAwardModal();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeAwardModal();
+        if (e.key === "ArrowRight") nextAwardCard();
+        if (e.key === "ArrowLeft") prevAwardCard();
+      });
+
+      // Initial card render
+      renderActiveAwardCard(false);
+
+    </script>
+  </body>
 </html>
-
